@@ -11,7 +11,9 @@ const PrevOrder_user = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`/api/v1/user/orders/previous`);
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/user/orders/previous`
+        );
         if (res.ok) {
           const data = await res.json();
           //   console.log(data.order);

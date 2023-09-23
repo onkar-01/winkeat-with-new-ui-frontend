@@ -12,7 +12,9 @@ const InventoryCard = ({ product, key }) => {
   const handleIncrementStock = async () => {
     try {
       const response = await fetch(
-        `/api/v1/product/stock-increment-by-one/${product._id}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/product/stock-increment-by-one/${product._id}`,
         {
           method: "PUT",
         }
@@ -33,7 +35,9 @@ const InventoryCard = ({ product, key }) => {
   const handleDecrementStock = async () => {
     try {
       const response = await fetch(
-        `/api/v1/product/stock-decrement-by-one/${product._id}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/product/stock-decrement-by-one/${product._id}`,
         {
           method: "PUT",
         }
@@ -135,7 +139,9 @@ const InventoryItems = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `/api/v1/${userInfo._id}/products?keyword=${keyword}`
+          `${import.meta.env.VITE_BASE_URL}/api/v1/${
+            userInfo._id
+          }/products?keyword=${keyword}`
         );
         if (res.ok) {
           const data = await res.json();

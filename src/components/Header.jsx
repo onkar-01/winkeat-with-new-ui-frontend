@@ -187,7 +187,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const dispatch = useDispatch();
   const signoutHandler = async () => {
     try {
-      await fetch("/api/v1/logout", {
+      await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, {
         method: "GET",
       });
       dispatch(logout());

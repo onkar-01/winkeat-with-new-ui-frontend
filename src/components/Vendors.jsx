@@ -30,9 +30,11 @@ const VendorCard = ({ vendor }) => {
 const Vendors = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios.get("/api/v1/getvendors").then((response) => {
-      setData(response.data.users);
-    });
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/api/v1/getvendors`)
+      .then((response) => {
+        setData(response.data.users);
+      });
   }, []);
   console.log(data);
   return (

@@ -9,7 +9,7 @@ const VerifyUser = () => {
 
   const verifyUserEmail = async () => {
     try {
-      await axios.post("/api/v1/verifyemail", { token });
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/verifyemail`, { token });
       setVerified(true);
     } catch (error) {
       setError(true);

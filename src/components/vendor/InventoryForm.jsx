@@ -53,11 +53,14 @@ const InventoryForm = () => {
         formData.append("stock", stock);
         formData.append("image", image);
         console.log(...formData);
-        const response = await fetch("/api/v1/product/new", {
-          method: "POST",
-          body: formData,
-          credentials: "include",
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/product/new`,
+          {
+            method: "POST",
+            body: formData,
+            credentials: "include",
+          }
+        );
         if (response.ok) {
           const data = await response.json();
           if (data.success) {

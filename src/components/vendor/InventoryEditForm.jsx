@@ -30,7 +30,7 @@ const InventoryEditForm = ({ id }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`/api/v1/product/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`);
         if (res.ok) {
           const data = await res.json();
           setProductDetail(data.product);
@@ -82,7 +82,7 @@ const InventoryEditForm = ({ id }) => {
         formData.append("stock", stock);
         formData.append("image", image);
 
-        const response = await fetch(`/api/v1/product/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`, {
           method: "PUT", // Assuming you're updating the product with a PUT request
           body: formData,
           credentials: "include",
@@ -110,7 +110,7 @@ const InventoryEditForm = ({ id }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/v1/product/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`, {
         method: "DELETE",
         credentials: "include",
       });

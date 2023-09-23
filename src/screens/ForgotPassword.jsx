@@ -12,11 +12,14 @@ const ForgotPassword = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/v1/password/forgot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }), // Pass the email as an object
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/password/forgot`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }), // Pass the email as an object
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();

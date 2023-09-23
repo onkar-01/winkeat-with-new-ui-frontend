@@ -13,7 +13,7 @@ const OrderCard = ({ item }) => {
     };
 
     try {
-      const res = await fetch("/api/v1/orders/update-order-status", {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/orders/update-order-status`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqbody), // Serialize the request body to JSON

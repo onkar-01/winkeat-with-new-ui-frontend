@@ -17,6 +17,8 @@ const Login = () => {
     }
   }, [userInfo]);
 
+  console.log("host:", import.meta.env.VITE_BASE_URL);
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const { email, password } = formData;
 
@@ -25,7 +27,7 @@ const Login = () => {
     e.preventDefault(); // Prevent the default form submission behavior
 
     try {
-      const response = await fetch("/api/v1/login", {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

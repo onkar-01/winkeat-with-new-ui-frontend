@@ -69,7 +69,11 @@ const MenuItems = ({ id }) => {
     const fetchProducts = async () => {
       try {
         dispatch(setVendorId(id));
-        const res = await fetch(`/api/v1/${id}/products?keyword=${keyword}`);
+        const res = await fetch(
+          `${
+            import.meta.env.VITE_BASE_URL
+          }/api/v1/${id}/products?keyword=${keyword}`
+        );
         if (res.ok) {
           const data = await res.json();
           dispatch(setProductList(data.products));

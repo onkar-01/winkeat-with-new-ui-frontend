@@ -59,7 +59,7 @@ const CartItems = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      url: "/api/v1/order/new",
+      url: `${import.meta.env.VITE_BASE_URL}/api/v1/order/new`,
       data: requestBody,
     });
     console.log(res);
@@ -69,14 +69,16 @@ const CartItems = () => {
     // console.log(amount);
     const {
       data: { order },
-    } = await axios.post("/api/v1/checkout", {
+    } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/checkout`, {
       amount: state.total,
     });
     // console.log(data);
 
     const {
       data: { key },
-    } = await axios.get("/api/v1/get-razorpay-api-key");
+    } = await axios.get(
+      `${import.meta.env.VITE_BASE_URL}/api/v1/get-razorpay-api-key`
+    );
     // console.log(window);
 
     // const {
@@ -101,7 +103,9 @@ const CartItems = () => {
       description: "winkeat logo",
       image: "/logo2.png",
       order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      callback_url: "http://localhost:4000/api/v1/paymentverification",
+      callback_url: `${
+        import.meta.env.VITE_BASE_URL
+      }/api/v1/paymentverification`,
       prefill: {
         name: userInfo.name,
         contact: userInfo.email,

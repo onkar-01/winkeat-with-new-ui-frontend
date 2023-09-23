@@ -26,11 +26,14 @@ const ResetPassword = () => {
     try {
       const reqbody = JSON.stringify({ token, password, confirmPassword });
 
-      const response = await fetch("/api/v1/password/reset", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: reqbody,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/password/reset`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: reqbody,
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
