@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
-import Vendors from "../components/vendors";
+import Vendors from "../components/Vendors";
 import { emptyCart } from "../slices/cartSlice";
 import NoPage from "./NoPage";
 
