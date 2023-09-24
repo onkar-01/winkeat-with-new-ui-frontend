@@ -27,7 +27,7 @@ const Register = () => {
 
   const { name, email, password } = formData;
 
-  //   console.log(name, email, password, image);
+  console.log(import.meta.env.VITE_BASE_URL);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -38,11 +38,14 @@ const Register = () => {
       formData.append("password", password);
       formData.append("image", image);
       console.log(...formData);
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/register`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/register`,
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         if (data.success) {

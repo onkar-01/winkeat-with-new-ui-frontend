@@ -58,26 +58,44 @@ const CartItems = () => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
       },
       url: `${import.meta.env.VITE_BASE_URL}/api/v1/order/new`,
       data: requestBody,
     });
-    console.log(res);
+    if (res.data.success) {
+      const orderId = res.data.order._id;
+      checkoutHandler(orderId);
+    }
   };
 
-  const checkoutHandler = async () => {
+  const checkoutHandler = async (orderId) => {
     // console.log(amount);
     const {
       data: { order },
-    } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/checkout`, {
-      amount: state.total,
-    });
+    } = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/api/v1/checkout`,
+      {
+        amount: state.total,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
     // console.log(data);
 
     const {
       data: { key },
     } = await axios.get(
-      `${import.meta.env.VITE_BASE_URL}/api/v1/get-razorpay-api-key`
+      `${import.meta.env.VITE_BASE_URL}/api/v1/get-razorpay-api-key`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
     );
     // console.log(window);
 
@@ -95,6 +113,11 @@ const CartItems = () => {
     // });
     // const data = await res.json();
 
+    const authToken = localStorage.getItem("token"); // Retrieve the JWT token from localStorage
+    const callbackUrl = `${
+      import.meta.env.VITE_BASE_URL
+    }/api/v1/paymentverification?token=${authToken}&orderId=${orderId}`;
+
     const options = {
       key: key, // Enter the Key ID generated from the Dashboard
       amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -103,9 +126,7 @@ const CartItems = () => {
       description: "winkeat logo",
       image: "/logo2.png",
       order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      callback_url: `${
-        import.meta.env.VITE_BASE_URL
-      }/api/v1/paymentverification`,
+      callback_url: callbackUrl,
       prefill: {
         name: userInfo.name,
         contact: userInfo.email,
@@ -118,7 +139,7 @@ const CartItems = () => {
       },
     };
     const razor = new window.Razorpay(options);
-    placeOrder();
+    // placeOrder();
     razor.open();
   };
 
@@ -155,7 +176,7 @@ const CartItems = () => {
         <h2>Tax: ₹{state.tax}</h2>
         <h2>Total: ₹{state.total}</h2>
         <button
-          onClick={checkoutHandler}
+          onClick={placeOrder}
           class="text-white text-[18px] w-[80%] h-[50px] mb-3 mt-[4rem] mx-auto  bg-[#ff742e] hover:bg-[#ff742ebc] focus:ring-4 focus:outline-none focus:ring-[#ff742e3b] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
         >
           Proceed to checkout

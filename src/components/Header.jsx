@@ -65,7 +65,7 @@ const SidebarWithHeader = () => {
   }
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("#fff", "#fff")}>
+    <Box className="z-50" minH="100vh" bg={useColorModeValue("#fff", "#fff")}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -189,6 +189,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
     try {
       await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, {
         method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       });
       dispatch(logout());
       localStorage.removeItem("token");
@@ -306,8 +309,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 bg={useColorModeValue("white", "gray.900")}
                 borderColor={useColorModeValue("gray.200", "gray.700")}
               >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
+                <MenuItem>
+                  <Link to="/profile">Settings</Link>
+                </MenuItem>
                 <MenuItem>Billing</MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={signoutHandler}>Sign out</MenuItem>

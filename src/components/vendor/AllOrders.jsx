@@ -11,12 +11,36 @@ const AllOrder = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/orders/all`);
+        let token = localStorage.getItem("token");
+
+        console.log(token);
+
+        if (!token) {
+          console.error("Token not found in local storage");
+          return;
+        }
+
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/orders/all`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        );
+
+        if (res.status === 401) {
+          // Handle token expiration or invalid token here.
+          // You might need to refresh the token or log the user out.
+          console.error("Token is invalid or expired");
+          return;
+        }
+
         if (res.ok) {
           const data = await res.json();
-          //   console.log(data.order);
           setData(data.orderItems);
-          //   dispatch(setProductList(data.products));
+          // dispatch(setProductList(data.products));
         } else {
           console.error("Error fetching products:", res.statusText);
         }

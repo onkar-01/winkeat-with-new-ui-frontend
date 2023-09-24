@@ -9,7 +9,7 @@ export default ({ mode }) => {
   return defineConfig({
     server: {
       proxy: {
-        "/api/v1": "https://tiny-elk-tights.cyclic.cloud/",
+        "/api/v1": "http://localhost:4000/",
       },
     },
     plugins: [react()],

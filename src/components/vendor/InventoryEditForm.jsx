@@ -30,7 +30,16 @@ const InventoryEditForm = ({ id }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`,
+          {
+            method: "GET",
+            headers: {
+              
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        );
         if (res.ok) {
           const data = await res.json();
           setProductDetail(data.product);
@@ -74,19 +83,18 @@ const InventoryEditForm = ({ id }) => {
       toast.error("Please fill in all the required fields");
     } else {
       try {
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("description", description);
-        formData.append("category", category);
-        formData.append("price", price);
-        formData.append("stock", stock);
-        formData.append("image", image);
-
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`, {
-          method: "PUT", // Assuming you're updating the product with a PUT request
-          body: formData,
-          credentials: "include",
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              'content-type': 'application/json',
+              Authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify(data),
+            credentials: "include",
+          }
+        );
 
         if (response.ok) {
           const responseData = await response.json();
@@ -110,10 +118,16 @@ const InventoryEditForm = ({ id }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         // Product deleted successfully, you can perform any necessary actions here.

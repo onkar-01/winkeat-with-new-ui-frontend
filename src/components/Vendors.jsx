@@ -31,11 +31,16 @@ const Vendors = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/api/v1/getvendors`)
+      .get(`${import.meta.env.VITE_BASE_URL}/api/v1/getvendors`, {
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((response) => {
         setData(response.data.users);
       });
-  }, []);
+  }, [data]);
   console.log(data);
   return (
     <div>

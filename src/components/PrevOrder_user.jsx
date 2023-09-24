@@ -12,7 +12,13 @@ const PrevOrder_user = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/v1/user/orders/previous`
+          `${import.meta.env.VITE_BASE_URL}/api/v1/user/orders/previous`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
         );
         if (res.ok) {
           const data = await res.json();

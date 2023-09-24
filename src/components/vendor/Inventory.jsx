@@ -17,6 +17,9 @@ const InventoryCard = ({ product, key }) => {
         }/api/v1/product/stock-increment-by-one/${product._id}`,
         {
           method: "PUT",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
       );
 
@@ -40,6 +43,9 @@ const InventoryCard = ({ product, key }) => {
         }/api/v1/product/stock-decrement-by-one/${product._id}`,
         {
           method: "PUT",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
       );
 
@@ -141,7 +147,13 @@ const InventoryItems = () => {
         const res = await fetch(
           `${import.meta.env.VITE_BASE_URL}/api/v1/${
             userInfo._id
-          }/products?keyword=${keyword}`
+          }/products?keyword=${keyword}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
         );
         if (res.ok) {
           const data = await res.json();

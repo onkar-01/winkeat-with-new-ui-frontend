@@ -13,11 +13,17 @@ const OrderCard = ({ item }) => {
     };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/orders/update-order-status`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reqbody), // Serialize the request body to JSON
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/orders/update-order-status`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify(reqbody), // Serialize the request body to JSON
+        }
+      );
 
       if (res.ok) {
         const data = await res.json();

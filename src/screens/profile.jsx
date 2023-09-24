@@ -13,9 +13,9 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="mt-20">
-      <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="overflow-hidden opacity-0 relative z-20 h-35 md:h-65">
+    <div className="mt-20 z-0">
+      <div className="overflow-hidden rounded-sm md:border md:border-stroke bg-white md:shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="overflow-hidden opacity-0 relative z-0 h-35 md:h-65">
           <img
             src={userInfo.avatar.url}
             alt="profile cover"
@@ -56,8 +56,12 @@ const Profile = () => {
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-            <div className="relative drop-shadow-2">
-              <img src={userInfo.avatar.url} alt="profile" />
+            <div className="mx-auto relative w-[150px] drop-shadow-2">
+              <img
+                src={userInfo.avatar.url}
+                alt="profile"
+                className="h-[100px] sm:w-[150px] sm:h-[150px] w-[100px]  rounded-lg"
+              />
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-[#ff742e] text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"

@@ -72,7 +72,13 @@ const MenuItems = ({ id }) => {
         const res = await fetch(
           `${
             import.meta.env.VITE_BASE_URL
-          }/api/v1/${id}/products?keyword=${keyword}`
+          }/api/v1/${id}/products?keyword=${keyword}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
         );
         if (res.ok) {
           const data = await res.json();

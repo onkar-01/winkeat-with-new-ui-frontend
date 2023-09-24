@@ -10,8 +10,10 @@ import {
   ButtonGroup,
 } from "@chakra-ui/react";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const InventoryForm = () => {
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [input, setInput] = useState("");
 
@@ -57,6 +59,9 @@ const InventoryForm = () => {
           `${import.meta.env.VITE_BASE_URL}/api/v1/product/new`,
           {
             method: "POST",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
             body: formData,
             credentials: "include",
           }
@@ -73,6 +78,7 @@ const InventoryForm = () => {
               description: "",
             });
             setImage(null);
+            navigate("/inventory");
           } else {
             toast.error(data.message);
           }

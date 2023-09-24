@@ -12,7 +12,13 @@ const ActiveOrder = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/v1/orders/active`
+          `${import.meta.env.VITE_BASE_URL}/api/v1/orders/active`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
         );
         if (res.ok) {
           const data = await res.json();
