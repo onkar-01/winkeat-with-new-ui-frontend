@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import OrderCard from "./OrderCard";
+import { BASE_URL } from "../helper";
 
 const PrevOrder_user = () => {
   const [data, setData] = useState([]);
@@ -12,7 +13,7 @@ const PrevOrder_user = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/v1/user/orders/previous`,
+          `${BASE_URL}/api/v1/user/orders/previous`,
           {
             method: "GET",
             headers: {

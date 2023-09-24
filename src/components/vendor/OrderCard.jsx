@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BASE_URL } from "../../helper";
 
 const OrderCard = ({ item }) => {
   const [status, setStatus] = useState("");
@@ -14,7 +15,7 @@ const OrderCard = ({ item }) => {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/orders/update-order-status`,
+        `${BASE_URL}/api/v1/orders/update-order-status`,
         {
           method: "POST",
           headers: {

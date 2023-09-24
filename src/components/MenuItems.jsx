@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { addToCart } from "../slices/cartSlice";
 import { setProductList } from "../slices/productSlice";
 import { setVendorId } from "../slices/vendorSlice";
+import { BASE_URL } from "../helper";
 
 const MenuCard = ({ product, handler }) => {
   const { name, user, price, images, _id } = product;
@@ -70,9 +71,7 @@ const MenuItems = ({ id }) => {
       try {
         dispatch(setVendorId(id));
         const res = await fetch(
-          `${
-            import.meta.env.VITE_BASE_URL
-          }/api/v1/${id}/products?keyword=${keyword}`,
+          `${BASE_URL}/api/v1/${id}/products?keyword=${keyword}`,
           {
             method: "GET",
             headers: {

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { BASE_URL } from "../helper";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const ResetPassword = () => {
       const reqbody = JSON.stringify({ token, password, confirmPassword });
 
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/password/reset`,
+        `${BASE_URL}/api/v1/password/reset`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

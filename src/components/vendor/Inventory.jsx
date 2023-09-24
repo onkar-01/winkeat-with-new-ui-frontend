@@ -5,6 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import InventoryEditForm from "./InventoryEditForm";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { BASE_URL } from "../../helper";
 
 const InventoryCard = ({ product, key }) => {
   const navigate = useNavigate();
@@ -12,9 +13,7 @@ const InventoryCard = ({ product, key }) => {
   const handleIncrementStock = async () => {
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/api/v1/product/stock-increment-by-one/${product._id}`,
+        `${BASE_URL}/api/v1/product/stock-increment-by-one/${product._id}`,
         {
           method: "PUT",
           headers: {
@@ -38,9 +37,7 @@ const InventoryCard = ({ product, key }) => {
   const handleDecrementStock = async () => {
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/api/v1/product/stock-decrement-by-one/${product._id}`,
+        `${BASE_URL}/api/v1/product/stock-decrement-by-one/${product._id}`,
         {
           method: "PUT",
           headers: {
@@ -145,9 +142,7 @@ const InventoryItems = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/v1/${
-            userInfo._id
-          }/products?keyword=${keyword}`,
+          `${BASE_URL}/api/v1/${userInfo._id}/products?keyword=${keyword}`,
           {
             method: "GET",
             headers: {

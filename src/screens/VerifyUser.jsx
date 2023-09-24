@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, VStack, Heading, Text, Button } from "@chakra-ui/react";
+import { BASE_URL } from "../helper";
 const VerifyUser = () => {
   const [token, setToken] = useState("");
   const [verified, setVerified] = useState(false);
@@ -9,7 +10,7 @@ const VerifyUser = () => {
 
   const verifyUserEmail = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/verifyemail`, { token });
+      await axios.post(`${BASE_URL}/api/v1/verifyemail`, { token });
       setVerified(true);
     } catch (error) {
       setError(true);

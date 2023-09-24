@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../helper";
 
 const InventoryForm = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const InventoryForm = () => {
         formData.append("image", image);
         console.log(...formData);
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/v1/product/new`,
+          `${BASE_URL}/api/v1/product/new`,
           {
             method: "POST",
             headers: {

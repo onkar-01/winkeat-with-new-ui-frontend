@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../slices/authSlice";
+import { BASE_URL } from "../helper";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -38,14 +39,11 @@ const Register = () => {
       formData.append("password", password);
       formData.append("image", image);
       console.log(...formData);
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/register`,
-        {
-          method: "POST",
-          body: formData,
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/v1/register`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
       if (response.ok) {
         const data = await response.json();
         if (data.success) {

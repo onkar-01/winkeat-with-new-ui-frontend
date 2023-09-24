@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../slices/authSlice";
+import { BASE_URL } from "../helper";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const Login = () => {
     e.preventDefault(); // Prevent the default form submission behavior
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/login`, {
+      const response = await fetch(`${BASE_URL}/api/v1/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

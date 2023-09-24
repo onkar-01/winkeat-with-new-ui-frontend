@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../helper";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -12,14 +13,11 @@ const ForgotPassword = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/password/forgot`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }), // Pass the email as an object
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/v1/password/forgot`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }), // Pass the email as an object
+      });
 
       if (response.ok) {
         const data = await response.json();

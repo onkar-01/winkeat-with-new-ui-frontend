@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import OrderCard from "./OrderCard";
+import { BASE_URL } from "../helper";
 
 const ActiveOrder_user = () => {
   const [data, setData] = useState([]);
@@ -11,15 +12,12 @@ const ActiveOrder_user = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/v1/user/orders/active`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        );
+        const res = await fetch(`${BASE_URL}/api/v1/user/orders/active`, {
+          method: "GET",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        });
         if (res.ok) {
           const data = await res.json();
           //   console.log(data.order);

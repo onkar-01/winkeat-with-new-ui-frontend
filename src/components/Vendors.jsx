@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../helper";
 
 const VendorCard = ({ vendor }) => {
   const { avatar, name, _id } = vendor;
@@ -31,7 +32,7 @@ const Vendors = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/api/v1/getvendors`, {
+      .get(`${BASE_URL}/api/v1/getvendors`, {
         method: "GET",
         headers: {
           Authorization: localStorage.getItem("token"),

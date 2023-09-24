@@ -42,6 +42,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 import { MdRestaurantMenu, MdOutlineInventory } from "react-icons/md";
+import { BASE_URL } from "../helper";
 
 const SidebarWithHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -187,7 +188,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const dispatch = useDispatch();
   const signoutHandler = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, {
+      await fetch(`${BASE_URL}/api/v1/logout`, {
         method: "GET",
         headers: {
           Authorization: localStorage.getItem("token"),

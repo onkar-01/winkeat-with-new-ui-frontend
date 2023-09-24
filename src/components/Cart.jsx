@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { increment, decrement, removeFromCart } from "../slices/cartSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../helper";
 
 const CartItems = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -60,7 +61,7 @@ const CartItems = () => {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem("token"),
       },
-      url: `${import.meta.env.VITE_BASE_URL}/api/v1/order/new`,
+      url: `${BASE_URL}/api/v1/order/new`,
       data: requestBody,
     });
     if (res.data.success) {
@@ -74,7 +75,7 @@ const CartItems = () => {
     const {
       data: { order },
     } = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/api/v1/checkout`,
+      `${BASE_URL}/api/v1/checkout`,
       {
         amount: state.total,
       },
@@ -88,15 +89,12 @@ const CartItems = () => {
 
     const {
       data: { key },
-    } = await axios.get(
-      `${import.meta.env.VITE_BASE_URL}/api/v1/get-razorpay-api-key`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    );
+    } = await axios.get(`${BASE_URL}/api/v1/get-razorpay-api-key`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
     // console.log(window);
 
     // const {
@@ -114,9 +112,7 @@ const CartItems = () => {
     // const data = await res.json();
 
     const authToken = localStorage.getItem("token"); // Retrieve the JWT token from localStorage
-    const callbackUrl = `${
-      import.meta.env.VITE_BASE_URL
-    }/api/v1/paymentverification?token=${authToken}&orderId=${orderId}`;
+    const callbackUrl = `${BASE_URL}/api/v1/paymentverification?token=${authToken}&orderId=${orderId}`;
 
     const options = {
       key: key, // Enter the Key ID generated from the Dashboard

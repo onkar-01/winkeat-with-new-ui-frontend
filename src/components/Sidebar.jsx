@@ -11,6 +11,7 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
 import { HiShoppingBag } from "react-icons/hi";
 import { setSearchKeyword } from "../slices/searchSlice";
+import { BASE_URL } from "../helper";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Sidebar = () => {
 
   const signoutHandler = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, {
+      await fetch(`${BASE_URL}/api/v1/logout`, {
         method: "GET",
         headers: {
           Authorization: localStorage.getItem("token"),
