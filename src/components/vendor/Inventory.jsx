@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductList } from "../../slices/productSlice";
 import { FaEdit } from "react-icons/fa";
@@ -6,11 +6,14 @@ import InventoryEditForm from "./InventoryEditForm";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { BASE_URL } from "../../helper";
+import Loader from "../Loader";
 
 const InventoryCard = ({ product, key }) => {
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
 
   const handleIncrementStock = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         `${BASE_URL}/api/v1/product/stock-increment-by-one/${product._id}`,
@@ -26,15 +29,19 @@ const InventoryCard = ({ product, key }) => {
         const updatedProduct = await response.json();
         // setProduct(updatedProduct.product);
         toast.success("Stock incremented successfully");
+        setLoading(false);
       } else {
         toast.error("Error decrementing stock: " + response.statusText);
+        setLoading(false);
       }
     } catch (error) {
       toast.error("Error decrementing stock: " + error.message);
+      setLoading(false);
     }
   };
 
   const handleDecrementStock = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         `${BASE_URL}/api/v1/product/stock-decrement-by-one/${product._id}`,
@@ -50,11 +57,14 @@ const InventoryCard = ({ product, key }) => {
         const updatedProduct = await response.json();
         // setProduct(updatedProduct.product);
         toast.success("Stock decremented successfully");
+        setLoading(false);
       } else {
         toast.error("Error decrementing stock: " + response.statusText);
+        setLoading(false);
       }
     } catch (error) {
       toast.error("Error decrementing stock: " + error.message);
+      setLoading(false);
     }
   };
 
@@ -63,6 +73,10 @@ const InventoryCard = ({ product, key }) => {
   const editInventoryHandler = () => {
     navigate(`/inventory/${product._id}/edit`);
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <>
@@ -133,6 +147,7 @@ const InventoryCard = ({ product, key }) => {
 };
 
 const InventoryItems = () => {
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const keyword = useSelector((state) => state.search.searchKeyword);
   const productData = useSelector((state) => state.product.productList);
@@ -153,16 +168,23 @@ const InventoryItems = () => {
         if (res.ok) {
           const data = await res.json();
           dispatch(setProductList(data.products));
+          setLoading(false);
         } else {
           console.error("Error fetching products:", res.statusText);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
+        setLoading(false);
       }
     };
 
     fetchProducts();
   }, [productData]);
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
   return (
     <div className=" grid lg:grid-cols-2  ">
       {productData?.map((product) => (

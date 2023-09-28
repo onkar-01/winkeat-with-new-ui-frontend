@@ -3,18 +3,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, VStack, Heading, Text, Button } from "@chakra-ui/react";
 import { BASE_URL } from "../helper";
+import Loader from "../components/Loader";
 const VerifyUser = () => {
+  const [loading, setLoading] = useState();
   const [token, setToken] = useState("");
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState(false);
 
   const verifyUserEmail = async () => {
+    setLoading(true);
     try {
       await axios.post(`${BASE_URL}/api/v1/verifyemail`, { token });
       setVerified(true);
+      setLoading(false);
     } catch (error) {
       setError(true);
       console.log(error.reponse.data);
+      setLoading(false);
     }
   };
 
@@ -28,6 +33,10 @@ const VerifyUser = () => {
       verifyUserEmail();
     }
   }, [token]);
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <VStack h="95vh" className="space-y-3" justifyContent={"center"}>

@@ -12,8 +12,10 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../helper";
+import Loader from "../Loader";
 
 const InventoryForm = () => {
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [input, setInput] = useState("");
@@ -36,6 +38,7 @@ const InventoryForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (
       !name ||
       !category ||
@@ -56,17 +59,14 @@ const InventoryForm = () => {
         formData.append("stock", stock);
         formData.append("image", image);
         console.log(...formData);
-        const response = await fetch(
-          `${BASE_URL}/api/v1/product/new`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-            body: formData,
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${BASE_URL}/api/v1/product/new`, {
+          method: "POST",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+          body: formData,
+          credentials: "include",
+        });
         if (response.ok) {
           const data = await response.json();
           if (data.success) {
@@ -79,19 +79,26 @@ const InventoryForm = () => {
               description: "",
             });
             setImage(null);
-            navigate("/inventory");
+            setLoading(false);
           } else {
             toast.error(data.message);
+            setLoading(false);
           }
         } else {
           toast.error("This item is alread already available in intventory");
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
         toast.error("Internal server error");
+        setLoading(false);
       }
     }
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <>

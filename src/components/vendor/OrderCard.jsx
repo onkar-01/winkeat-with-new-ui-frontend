@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { BASE_URL } from "../../helper";
+import Loader from "../Loader";
 
 const OrderCard = ({ item }) => {
   const [status, setStatus] = useState("");
-
+  const [loading, setLoading] = useState();
   const updateStatus = async (e) => {
+    setLoading(true);
     e.preventDefault();
     setStatus(e.target.value);
 
@@ -14,26 +16,26 @@ const OrderCard = ({ item }) => {
     };
 
     try {
-      const res = await fetch(
-        `${BASE_URL}/api/v1/orders/update-order-status`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
-          },
-          body: JSON.stringify(reqbody), // Serialize the request body to JSON
-        }
-      );
+      const res = await fetch(`${BASE_URL}/api/v1/orders/update-order-status`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify(reqbody), // Serialize the request body to JSON
+      });
 
       if (res.ok) {
         const data = await res.json();
         console.log(data); // Handle the response data as needed
+        setLoading(false); //
       } else {
         console.error("Error in fetch request:", res.statusText);
+        setLoading(false); //
       }
     } catch (error) {
       console.error("Error in fetch request:", error);
+      setLoading(false); //
     }
   };
 
@@ -41,6 +43,14 @@ const OrderCard = ({ item }) => {
 
   const orderStatus = (status) => {
     if (status === "completed") {
+      return (
+        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+          <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
+            {item.productStatus}
+          </p>
+        </td>
+      );
+    } else if (status === "delivered") {
       return (
         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
@@ -92,6 +102,10 @@ const OrderCard = ({ item }) => {
       </td>
     );
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <tr>

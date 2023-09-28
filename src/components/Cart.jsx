@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
@@ -6,8 +6,10 @@ import { increment, decrement, removeFromCart } from "../slices/cartSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../helper";
+import Loader from "./Loader";
 
 const CartItems = () => {
+  const [loading, setLoading] = useState();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const userInfo = useSelector((state) => state.auth.userInfo);
 
@@ -34,6 +36,7 @@ const CartItems = () => {
   };
 
   const placeOrder = async () => {
+    setLoading(true);
     console.log("called place order");
     let orderItems = [];
     let totalPrice = state.total;
@@ -67,6 +70,7 @@ const CartItems = () => {
     if (res.data.success) {
       const orderId = res.data.order._id;
       checkoutHandler(orderId);
+      setLoading(false);
     }
   };
 
@@ -138,6 +142,10 @@ const CartItems = () => {
     // placeOrder();
     razor.open();
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <div className="cart">

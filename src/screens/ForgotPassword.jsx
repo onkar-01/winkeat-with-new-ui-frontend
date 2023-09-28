@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../helper";
+import Loader from "../components/Loader";
 
 const ForgotPassword = () => {
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
@@ -12,6 +14,7 @@ const ForgotPassword = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch(`${BASE_URL}/api/v1/password/forgot`, {
         method: "POST",
@@ -22,17 +25,24 @@ const ForgotPassword = () => {
       if (response.ok) {
         const data = await response.json();
         toast.success(data.message);
+        setLoading(false);
       } else {
         // Handle non-successful responses
         const errorData = await response.json();
         toast.error(errorData.error);
+        setLoading(false);
       }
     } catch (err) {
       console.error("Error:", err);
       // Handle any network or other errors
       toast.error("An error occurred while processing your request.");
+      setLoading(false);
     }
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <>

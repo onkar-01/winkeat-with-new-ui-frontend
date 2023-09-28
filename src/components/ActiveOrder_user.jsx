@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import OrderCard from "./OrderCard";
 import { BASE_URL } from "../helper";
+import Loader from "./Loader";
 
 const ActiveOrder_user = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const keyword = useSelector((state) => state.search.searchKeyword);
   const productData = useSelector((state) => state.product.productList);
@@ -22,12 +24,15 @@ const ActiveOrder_user = () => {
           const data = await res.json();
           //   console.log(data.order);
           setData(data.orderItems);
+          setLoading(false);
           //   dispatch(setProductList(data.products));
         } else {
           console.error("Error fetching products:", res.statusText);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
+        setLoading(false);
       }
     };
 
@@ -35,6 +40,10 @@ const ActiveOrder_user = () => {
   }, [data]);
 
   console.log(data);
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
   return (
     <div className="mt-20">
       <div className="rounded-sm bg-white lg:px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

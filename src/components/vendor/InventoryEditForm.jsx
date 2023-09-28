@@ -13,8 +13,10 @@ import toast, { Toaster } from "react-hot-toast";
 import InventoryAddButton from "./InventoryAddButton";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../helper";
+import Loader from "../Loader";
 
 const InventoryEditForm = ({ id }) => {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [productDetail, setProductDetail] = useState({});
   const [input, setInput] = useState("");
@@ -41,11 +43,14 @@ const InventoryEditForm = ({ id }) => {
           const data = await res.json();
           setProductDetail(data.product);
           setImage(data.product.image);
+          setLoading(false);
         } else {
           console.error("Error fetching product:", res.statusText);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching product:", error);
+        setLoading(false);
       }
     };
 
@@ -76,8 +81,10 @@ const InventoryEditForm = ({ id }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!name || !category || !price || !stock || !description) {
       toast.error("Please fill in all the required fields");
+      setLoading(false);
     } else {
       try {
         const response = await fetch(`${BASE_URL}/api/v1/product/${id}`, {
@@ -95,22 +102,29 @@ const InventoryEditForm = ({ id }) => {
           if (responseData.success) {
             toast.success("Product updated successfully");
             console.log(responseData);
+            navigate("/inventory");
+            setLoading(false);
           } else {
             toast.error(responseData.message);
+            setLoading(false);
           }
         } else if (response.status === 409) {
           toast.error("This item is already available in inventory");
+          setLoading(false);
         } else {
           toast.error("Internal server error");
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
         toast.error("Internal server error");
+        setLoading(false);
       }
     }
   };
 
   const handleDelete = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${BASE_URL}/api/v1/product/${id}`, {
         method: "DELETE",
@@ -124,18 +138,26 @@ const InventoryEditForm = ({ id }) => {
         // Product deleted successfully, you can perform any necessary actions here.
         toast.success("Product deleted successfully");
         navigate("/inventory");
+        setLoading(false);
         // Optionally, you can redirect to a different page or update the UI as needed.
       } else if (response.status === 404) {
         toast.error("Product not found");
         navigate("/inventory");
+        setLoading(false);
       } else {
         toast.error("Internal server error");
+        setLoading(false);
       }
     } catch (error) {
       console.error(error);
       toast.error("Internal server error");
+      setLoading(false);
     }
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../helper";
+import Loader from "./Loader";
 
 const VendorCard = ({ vendor }) => {
   const { avatar, name, _id } = vendor;
@@ -30,6 +31,7 @@ const VendorCard = ({ vendor }) => {
 
 const Vendors = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/v1/getvendors`, {
@@ -41,8 +43,12 @@ const Vendors = () => {
       .then((response) => {
         setData(response.data.users);
       });
+    setLoading(false);
   }, [data]);
   console.log(data);
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
   return (
     <div>
       {" "}

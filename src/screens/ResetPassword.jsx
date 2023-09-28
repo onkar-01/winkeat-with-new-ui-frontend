@@ -4,8 +4,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { BASE_URL } from "../helper";
+import Loader from "../components/Loader";
 
 const ResetPassword = () => {
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const seachQuery = useSearchParams()[0];
@@ -16,40 +18,46 @@ const ResetPassword = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     // Assuming you have the "password" and "confirmPassword" variables defined earlier
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return; // Exit the function early if passwords don't match
+      setLoading(false);
     }
 
     try {
       const reqbody = JSON.stringify({ token, password, confirmPassword });
 
-      const response = await fetch(
-        `${BASE_URL}/api/v1/password/reset`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: reqbody,
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/v1/password/reset`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: reqbody,
+      });
 
       if (response.ok) {
         const data = await response.json();
         toast.success("Your password has been successfully changed");
+        setLoading(false);
         navigate("/auth/login");
       } else {
         const errorData = await response.json();
         toast.error(errorData.message);
+        setLoading(false);
       }
     } catch (err) {
       console.error("Error:", err);
       // Handle any network or other errors
       toast.error("An error occurred while processing your request.");
+      setLoading(false);
     }
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <>

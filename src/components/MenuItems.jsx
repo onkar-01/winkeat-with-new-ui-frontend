@@ -1,10 +1,11 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect , useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { addToCart } from "../slices/cartSlice";
 import { setProductList } from "../slices/productSlice";
 import { setVendorId } from "../slices/vendorSlice";
 import { BASE_URL } from "../helper";
+import Loader from "./Loader";
 
 const MenuCard = ({ product, handler }) => {
   const { name, user, price, images, _id } = product;
@@ -61,6 +62,7 @@ const MenuCard = ({ product, handler }) => {
 };
 
 const MenuItems = ({ id }) => {
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const keyword = useSelector((state) => state.search.searchKeyword);
   const productData = useSelector((state) => state.product.productList);
@@ -82,11 +84,14 @@ const MenuItems = ({ id }) => {
         if (res.ok) {
           const data = await res.json();
           dispatch(setProductList(data.products));
+          setLoading(false);
         } else {
           console.error("Error fetching products:", res.statusText);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
+        setLoading(false);
       }
     };
 
@@ -98,6 +103,10 @@ const MenuItems = ({ id }) => {
     console.log(options);
     toast.success("Added to cart");
   };
+
+  if (loading === true) {
+    return <Loader loading={loading} />;
+  }
 
   return (
     <section className=" flex flex-auto flex-wrap justify-items-center justify-center gap-x-5 gap-y-10 md:gap-y-10 md:gap-x-10 lg:gap-y-14 lg:gap-x-10 mt-[20px] mb-5 mr-auto ml-auto sm:mr-5">

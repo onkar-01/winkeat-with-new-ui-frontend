@@ -4,8 +4,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../slices/authSlice";
 import { BASE_URL } from "../helper";
+import Loader from "../components/Loader";
 
 const Register = () => {
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
@@ -22,22 +24,26 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
   });
   const [image, setImage] = useState(null);
 
-  const { name, email, password } = formData;
+  const { name, email, phone, password } = formData;
 
   console.log(import.meta.env.VITE_BASE_URL);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     try {
       formData.append("name", name);
       formData.append("email", email);
+      formData.append("phone", phone);
       formData.append("password", password);
       formData.append("image", image);
+
       console.log(...formData);
       const response = await fetch(`${BASE_URL}/api/v1/register`, {
         method: "POST",
@@ -54,23 +60,29 @@ const Register = () => {
             name: "",
             email: "",
             password: "",
+            phone: "",
           });
           setImage(null);
           console.log(data);
+          navigate("/auth/login");
+          setLoading(false);
         } else {
           toast.error(data.message);
+          setLoading(false);
         }
       } else {
         toast.error("The user is already registered");
         console.log(response);
+        setLoading(false);
       }
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
   };
-
   return (
     <>
+      {loading && <Loader loading={loading} />}
       <section className="sm:bg-gray-50 ">
         <div className="flex flex-col items-center justify-center sm:px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white sm:rounded-lg sm:shadow md:mt-0 sm:max-w-md xl:p-0 text-center">
@@ -101,7 +113,7 @@ const Register = () => {
                         className="ml-auto mr-auto h-[150px]"
                       />
                     ) : (
-                      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                      <div class="flex flex-col h-[120px] items-center justify-center">
                         <svg
                           class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
                           aria-hidden="true"
@@ -155,7 +167,7 @@ const Register = () => {
                     name="email"
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                    placeholder="name@company.com"
+                    placeholder="Email Address"
                     required
                     value={email}
                     onChange={(e) =>
@@ -165,10 +177,24 @@ const Register = () => {
                 </div>
                 <div>
                   <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="Phone Number"
+                    required
+                    value={phone}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <input
                     type="password"
                     name="password"
                     id="password"
-                    placeholder="••••••••"
+                    placeholder="Password"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     required
                     value={password}

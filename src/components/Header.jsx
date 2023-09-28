@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Link,
@@ -129,9 +129,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {linkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} href={link.href}>
-          {link.name}
-        </NavItem>
+        <div className="nav-link" onClick={onClose}>
+          <NavItem key={link.name} icon={link.icon} href={link.href}>
+            {link.name}
+          </NavItem>
+        </div>
       ))}
     </Box>
   );
@@ -180,6 +182,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const userInfo = useSelector((state) => state.auth.userInfo);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const vendorId = useSelector((state) => state.vendor.vendorId);
+
+  const [loading, setLoading] = useState();
   console.log(vendorId);
 
   const userImg = userInfo.avatar.url;
@@ -187,6 +191,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const signoutHandler = async () => {
+    setLoading(true);
     try {
       await fetch(`${BASE_URL}/api/v1/logout`, {
         method: "GET",
@@ -197,6 +202,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
       dispatch(logout());
       localStorage.removeItem("token");
       navigate("/auth/login");
+      setLoading(false);
       return null;
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -242,40 +248,28 @@ const MobileNav = ({ onOpen, ...rest }) => {
           icon={<FiMenu />}
         />
         {flag ? (
-          <>
-            <Text
-              display={{ base: "flex", md: "none" }}
-              fontSize="2xl"
-              fontFamily="monospace"
-              fontWeight="bold"
-            >
-              <Image h={10} src="/logo.png" />
-            </Text>
-          </>
+          <Text
+            display={{ base: "flex", md: "none" }}
+            fontSize="2xl"
+            fontFamily="monospace"
+            fontWeight="bold"
+          >
+            <Image h={10} src="/logo.png" />
+          </Text>
         ) : (
-          <>
-            <Text
-              display={{ base: "flex", md: "none" }}
-              fontSize="2xl"
-              fontFamily="monospace"
-              fontWeight="bold"
-            >
-              <Image h={10} src="/logo2.png" />
-            </Text>
-            <div className="relative flex  mr-2 sm:mr-6 my-2">
-              <input
-                type="text"
-                className="bg-purple-white shadow-lg rounded border-0 p-2"
-                placeholder="Search by name..."
-                onChange={(e) => {
-                  searchHandler(e);
-                }}
-              />
-              <div className=" pin-r pin-t mt-[13px] ml-[-25px] text-purple-lighter">
-                <BiSearch />
-              </div>
+          <div className="relative flex  mr-2 sm:mr-6 my-2">
+            <input
+              type="text"
+              className="bg-purple-white shadow-lg rounded border-0 p-2"
+              placeholder="Search by name..."
+              onChange={(e) => {
+                searchHandler(e);
+              }}
+            />
+            <div className=" pin-r pin-t mt-[13px] ml-[-25px] text-purple-lighter">
+              <BiSearch />
             </div>
-          </>
+          </div>
         )}
 
         <HStack spacing={{ base: "0", md: "6" }}>
@@ -310,9 +304,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 bg={useColorModeValue("white", "gray.900")}
                 borderColor={useColorModeValue("gray.200", "gray.700")}
               >
-                <MenuItem>
-                  <Link to="/profile">Settings</Link>
-                </MenuItem>
+                <Link to="/profile">
+                  <MenuItem>Settings</MenuItem>
+                </Link>
                 <MenuItem>Billing</MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={signoutHandler}>Sign out</MenuItem>
