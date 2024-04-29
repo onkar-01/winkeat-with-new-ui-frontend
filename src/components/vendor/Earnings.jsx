@@ -37,7 +37,7 @@ const [data, setData] = useState([]);
         <h1 className='p-4 flex items-center text-[50px] sm:text-[60px] md:text-[50px] lg:text-[50px] font-bold'>
           ₹ {data.totalEarnings ?? 0}
         </h1>
-        <p className='mr-2 text-[14px] min-w-max sm:text-[16px] md:text-[14px] flex flex-row  lg:text-[14px]'>Total Sales : {data.widthdrawaled ? <p className='text-success ml-1'>withdrawn</p> : <p className='text-red-600 ml-1'>Not withdrawn yet</p>
+        <p className='mr-2 text-[14px] min-w-max sm:text-[16px] md:text-[14px] text-center  lg:text-[14px]'>Total Sales {data.widthdrawaled ? <p className='text-success'>withdrawn</p> : <p className='text-red-600 ml-1'>Not withdrawn yet</p>
       }</p>
       </div>
     </div>

@@ -22,10 +22,8 @@ const ActiveOrder_user = () => {
         });
         if (res.ok) {
           const data = await res.json();
-          //   console.log(data.order);
           setData(data.orderItems);
           setLoading(false);
-          //   dispatch(setProductList(data.products));
         } else {
           console.error("Error fetching products:", res.statusText);
           setLoading(false);
@@ -35,8 +33,15 @@ const ActiveOrder_user = () => {
         setLoading(false);
       }
     };
-
+  
+    // Call fetchProducts initially
     fetchProducts();
+  
+    // Set up polling to call fetchProducts every 10 seconds
+    const interval = setInterval(fetchProducts, 10000);
+  
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(interval);
   }, []);
 
   console.log(data);

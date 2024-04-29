@@ -13,44 +13,44 @@ const AllOrder = ({setDashboardDate}) => {
   const productData = useSelector((state) => state.product.productList);
   const userInfo = useSelector((state) => state.auth.userInfo);
   const [date, setDate] = useState(new Date().toLocaleDateString().split("/").reverse().join("-"));
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setDashboardDate(date);
-        let token = localStorage.getItem("token");
-        console.log(token);
-        if (!token) {
-          console.error("Token not found in local storage");
-          return;
-        }
-        const res = await fetch(`${BASE_URL}/api/v1/orders/all/?keyword=${keyword}&startDate=${date}&endDate=${date}`, {
-          method: "GET",
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        });
+  const fetchProducts = async () => {
+    try {
+      setDashboardDate(date);
+      let token = localStorage.getItem("token");
+      console.log(token);
+      if (!token) {
+        console.error("Token not found in local storage");
+        return;
+      }
+      const res = await fetch(`${BASE_URL}/api/v1/orders/all/?keyword=${keyword}&startDate=${date}&endDate=${date}`, {
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
 
-        if (res.status === 401) {
-          // Handle token expiration or invalid token here.
-          // You might need to refresh the token or log the user out.
-          console.error("Token is invalid or expired");
-          return;
-        }
+      if (res.status === 401) {
+        // Handle token expiration or invalid token here.
+        // You might need to refresh the token or log the user out.
+        console.error("Token is invalid or expired");
+        return;
+      }
 
-        if (res.ok) {
-          const data = await res.json();
-          setData(data.orderItems);
-          setLoading(false);
-          // dispatch(setProductList(data.products));
-        } else {
-          console.error("Error fetching products:", res.statusText);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching products:", error);
+      if (res.ok) {
+        const data = await res.json();
+        setData(data.orderItems);
+        setLoading(false);
+        // dispatch(setProductList(data.products));
+      } else {
+        console.error("Error fetching products:", res.statusText);
         setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
 
     fetchProducts();
   }, [keyword,date]);
@@ -96,7 +96,7 @@ const AllOrder = ({setDashboardDate}) => {
             </thead>
             <tbody>
               {data.length !== 0 ? (
-                data.map((product) => <OrderCard item={product} />)
+                data.map((product) => <OrderCard item={product} fetchProducts={fetchProducts} />)
               ) : (
                 <div className="text-center">
                   <h1 className="text-center text-lg">No products found.</h1>

@@ -23,7 +23,7 @@ const InvoiceInfo = ({
   companyEmail,
   addressCityStateZip,
 }) => (
-  <InvoiceInfoContainer>
+  <InvoiceInfoContainer >
     <tr>
       <ClientName className='font-bold' rowSpan="2">
         {clientName}

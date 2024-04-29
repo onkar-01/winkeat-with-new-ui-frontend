@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../../helper";
 import Loader from "../Loader";
+import { useNavigate } from "react-router-dom";
 
-const OrderCard = ({ item }) => {
+const OrderCard = ({ item, fetchProducts }) => {
+  const navigate = useNavigate();
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState();
   const updateStatus = async (e) => {
     setLoading(true);
     e.preventDefault();
+    console.log(e.target.value);
     setStatus(e.target.value);
-
     const reqbody = {
       orderStatus: e.target.value,
-      orderItemId: item.id,
+      orderItemId: item.itemOrderId,
     };
+    
 
     try {
       const res = await fetch(`${BASE_URL}/api/v1/orders/update-order-status`, {
@@ -28,6 +31,7 @@ const OrderCard = ({ item }) => {
       if (res.ok) {
         const data = await res.json();
         console.log(data); // Handle the response data as needed
+        fetchProducts();
         setLoading(false); //
       } else {
         console.error("Error in fetch request:", res.statusText);
@@ -38,6 +42,10 @@ const OrderCard = ({ item }) => {
       setLoading(false); //
     }
   };
+
+  useEffect(() => {
+    setStatus(item.productStatus);
+  }, []);
 
   console.log(status, item.id);
 
@@ -153,7 +161,7 @@ const OrderCard = ({ item }) => {
         {item.productStatus === "rejected" ||
         item.productStatus === "delivered" ? (
           <div className="flex items-center space-x-3.5">
-            <button className="hover:text-primary">
+            <button onClick={()=>navigate(`/invoice?order_id=${item.id}`)} className="hover:text-[#ff742e]">
               <svg
                 className="fill-current"
                 width="18"
@@ -177,9 +185,10 @@ const OrderCard = ({ item }) => {
           <select
             id="countries"
             class="bg-gray-50 border min-w-[130px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#ff9d4e] focus:border-[#ffc259] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={updateStatus}
+            onChange={(e)=>updateStatus(e)}
+            value={status}
           >
-            <option selected value="pending">
+            <option  value="pending">
               pending
             </option>
             <option value="rejected">rejected</option>

@@ -12,33 +12,33 @@ const PrevOrder = () => {
   const productData = useSelector((state) => state.product.productList);
   const userInfo = useSelector((state) => state.auth.userInfo);
   const [date, setDate] = useState(new Date().toLocaleDateString().split("/").reverse().join("-"));
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(
-          `${BASE_URL}/api/v1/orders/previous?keyword=${keyword}&startDate=${date}&endDate=${date}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        );
-        if (res.ok) {
-          const data = await res.json();
-          //   console.log(data.order);
-          setData(data.orderItems);
-          setLoading(false);
-          //   dispatch(setProductList(data.products));
-        } else {
-          console.error("Error fetching products:", res.statusText);
-          setLoading(false);
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/api/v1/orders/previous?keyword=${keyword}&startDate=${date}&endDate=${date}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
         }
-      } catch (error) {
-        console.error("Error fetching products:", error);
+      );
+      if (res.ok) {
+        const data = await res.json();
+        //   console.log(data.order);
+        setData(data.orderItems);
+        setLoading(false);
+        //   dispatch(setProductList(data.products));
+      } else {
+        console.error("Error fetching products:", res.statusText);
         setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
 
     fetchProducts();
   }, [keyword, date]);
@@ -84,7 +84,7 @@ const PrevOrder = () => {
             </thead>
             <tbody>
               {data.length !== 0 ? (
-                data.map((product) => <OrderCard item={product} />)
+                data.map((product) => <OrderCard item={product} fetchProducts={fetchProducts} />)
               ) : (
                 <div className="text-center">
                   <h1 className="text-center text-lg">No products found.</h1>

@@ -47,15 +47,17 @@ const FooterPlacement = createGlobalStyle`
 const Footer = ({data}) => (
   <FooterContainer>
     <FooterPlacement />
+    <div className='flex flex-row w-full justify-between'>
     <Info>
       <span>{'winkeat'}</span>|{' '}
       {/* <span>555 444 6666</span> |{' '} */}
       <span>{'winkeat.info@gmail.com'}</span>
     </Info>
-    <Thanks>
+    <Info>
       {/* <img src="https://github.com/anvilco/html-pdf-invoice-template/raw/main/img/heart.png" alt="heart" /> */}
-      <span className='mt-[20px] font-semibold'>Thank you!</span>
-    </Thanks>
+      <span className='font-semibold'>Thank you!</span>
+    </Info>
+    </div>
   </FooterContainer>
 )
 
