@@ -3,7 +3,7 @@ import AllOrder from "../../components/vendor/AllOrders";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const AllOrders = () => {
+const AllOrders = ({setDashboardDate}) => {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.auth.userInfo);
   useEffect(() => {
@@ -16,7 +16,7 @@ const AllOrders = () => {
     // You can return a loading message or something else while userInfo is being checked
     return <div>Loading...</div>;
   }
-  return <AllOrder />;
+  return <AllOrder setDashboardDate={setDashboardDate}  />;
 };
 
 export default AllOrders;

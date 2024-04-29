@@ -11,10 +11,11 @@ const PrevOrder_user = () => {
   const keyword = useSelector((state) => state.search.searchKeyword);
   const productData = useSelector((state) => state.product.productList);
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const [date, setDate] = useState(new Date().toLocaleDateString().split("/").reverse().join("-"));
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/v1/user/orders/previous`, {
+        const res = await fetch(`${BASE_URL}/api/v1/user/orders/previous/?keyword=${keyword}&startDate=${date}&endDate=${date}`, {
           method: "GET",
           headers: {
             Authorization: localStorage.getItem("token"),
@@ -37,18 +38,27 @@ const PrevOrder_user = () => {
     };
 
     fetchProducts();
-  }, [data]);
+  }, [keyword,date]);
 
   if (loading === true) {
     return <Loader loading={loading} />;
   }
   return (
     <div className="mt-20">
+      <input 
+  type="date" 
+  value={date} 
+  onChange={(e) => setDate(e.target.value)} // Update the date state with the selected value
+  className="border border-gray-300 rounded-md p-2.5 w-full dark:bg-boxdark dark:border-strokedark" 
+/> 
       <div className="rounded-sm bg-white lg:px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
+              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  Order ID
+                </th>
                 <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                   Product Name
                 </th>

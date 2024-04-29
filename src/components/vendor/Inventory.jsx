@@ -180,7 +180,7 @@ const InventoryItems = () => {
     };
 
     fetchProducts();
-  }, [productData]);
+  }, [keyword]);
 
   if (loading === true) {
     return <Loader loading={loading} />;

@@ -10,6 +10,8 @@ import {
 import { logout } from "../slices/authSlice";
 import { toast, Toaster } from "react-hot-toast";
 import { HiShoppingBag } from "react-icons/hi";
+import { FaShoppingCart } from "react-icons/fa";
+
 import { BiSearch } from "react-icons/bi";
 import { setSearchKeyword } from "../slices/searchSlice";
 import {
@@ -213,10 +215,13 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
   const pathmenu1 = path.search("/menu");
   const pathmenu2 = path.search("/inventory");
+  const pathmenu3 = path.search("/active-orders");
+  const pathmenu4 = path.search("/previous-orders");
+  const pathmenu5 = path.search("/dashboard");
   console.log(pathmenu1, pathmenu2);
 
   var flag = true;
-  if (pathmenu1 !== -1 || pathmenu2 !== -1) {
+  if (pathmenu1 !== -1 || pathmenu2 !== -1 || pathmenu3 !== -1 || pathmenu4 !== -1 || pathmenu5 !== -1) {
     flag = false;
   }
 
@@ -301,14 +306,32 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 </HStack>
               </MenuButton>
               <MenuList
+              opacity={1}
+              zIndex={9999}
                 bg={useColorModeValue("white", "gray.900")}
                 borderColor={useColorModeValue("gray.200", "gray.700")}
               >
-                <Link to="/profile">
-                  <MenuItem>Settings</MenuItem>
-                </Link>
-                <MenuItem>Billing</MenuItem>
+                  {/* <MenuItem>Settings</MenuItem> */}
+                  <HStack marginLeft={"1.5"}>
+                  <Avatar size={"sm"} src={userImg} />
+                  <VStack
+                    alignItems="flex-start"
+                    spacing="1px"
+                    ml="2"
+                  >
+                    <Text fontSize="sm" className="capitalize">
+                      {userInfo.name}
+                    </Text>
+                    <Text fontSize="xs" color="gray.600">
+                      {userInfo.role}
+                    </Text>
+                  </VStack>
+                </HStack>
+                {/* <MenuItem>Billing</MenuItem> */}
                 <MenuDivider />
+                <MenuItem onClick={signoutHandler}>Active Order</MenuItem>
+                <MenuItem onClick={signoutHandler}>Previous Order</MenuItem>
+                <MenuItem onClick={signoutHandler}>Profile</MenuItem>
                 <MenuItem onClick={signoutHandler}>Sign out</MenuItem>
               </MenuList>
             </Menu>

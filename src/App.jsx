@@ -22,6 +22,7 @@ import AllPrevOrderUser from "./screens/AllPrevOrderUser";
 import AddInventory from "./screens/vendor/AddInventory";
 import ForgotPassword from "./screens/ForgotPassword";
 import ResetPassword from "./screens/ResetPassword";
+import InvoicePage from "./screens/Invoice";
 
 const App = () => {
   return (
@@ -46,6 +47,8 @@ const App = () => {
           <Route path="/success" element={<PaymentSuccess />} />
           <Route path="/previous-orders" element={<PreviousOrders />} />
           <Route path="/active-orders" element={<ActiveOrders />} />
+          <Route path="/invoice" element={<InvoicePage />} />
+          <Route path="*" element={<NoPage />} />
         </Route>
         <Route path="*" element={<NoPage />} />
       </Routes>

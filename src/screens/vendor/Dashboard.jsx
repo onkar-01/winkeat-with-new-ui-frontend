@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AllOrders from "./AllOrders";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Earnings from "../../components/vendor/Earnings";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const [date, setDate] = useState(new Date().toLocaleDateString().split("/").reverse().join("-"));
   useEffect(() => {
     if (userInfo.role === "user") {
       navigate("/page-note-found");
@@ -18,7 +20,8 @@ const Dashboard = () => {
   }
   return (
     <div className="mt-20">
-      <AllOrders />
+      <Earnings date={date}/>
+      <AllOrders setDashboardDate={setDate}/>
     </div>
   );
 };

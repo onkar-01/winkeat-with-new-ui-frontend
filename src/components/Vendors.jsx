@@ -44,7 +44,7 @@ const Vendors = () => {
         setData(response.data.users);
       });
     setLoading(false);
-  }, [data]);
+  }, []);
   console.log(data);
   if (loading === true) {
     return <Loader loading={loading} />;

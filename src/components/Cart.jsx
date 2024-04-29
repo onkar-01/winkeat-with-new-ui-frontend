@@ -40,6 +40,7 @@ const CartItems = () => {
     console.log("called place order");
     let orderItems = [];
     let totalPrice = state.total;
+    let tax = state.tax;
     let vendor = params.id;
     cartItems.map((item) => {
       orderItems.push({
@@ -55,6 +56,7 @@ const CartItems = () => {
       orderItems,
       totalPrice,
       vendor,
+      tax,
     };
 
     // console.log(orderData);
@@ -135,7 +137,7 @@ const CartItems = () => {
         address: "Razorpay Corporate Office",
       },
       theme: {
-        color: "#ffcf52",
+        color: "#ff742e",
       },
     };
     const razor = new window.Razorpay(options);

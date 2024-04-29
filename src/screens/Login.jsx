@@ -3,10 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../slices/authSlice";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { BASE_URL } from "../helper";
+
 import Loader from "../components/Loader";
 const Login = () => {
   const [loading, setLoading] = useState();
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg,setErrorMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
@@ -28,7 +32,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     // Use async to handle asynchronous operations
     e.preventDefault(); // Prevent the default form submission behavior
-    setLoading(true);
+    // setLoading(true);
     try {
       const response = await fetch(`${BASE_URL}/api/v1/login`, {
         method: "POST",
@@ -45,14 +49,17 @@ const Login = () => {
         if (res.user.role === "user") {
           navigate("/");
           setLoading(false);
+          setErrorMsg("");
         } else if (res.user.role === "vendor") {
           navigate("/dashboard");
           setLoading(false);
+          setErrorMsg("");
         }
       } else {
         if (response.status === 401) {
           toast.error("Authentication failed. Please check your credentials.");
           setLoading(false);
+          setErrorMsg("Authentication failed. Please check your credentials.");
         } else {
           toast.error(
             "An error occurred while logging in. Please try again later."
@@ -65,7 +72,8 @@ const Login = () => {
       toast.error(
         "An error occurred while logging in. Please try again later."
       );
-      console.error(err); // Log the error to the console for debugging
+      setErrorMsg(response.message);
+      console.error(err);
       setLoading(false);
     }
   };
@@ -98,7 +106,7 @@ const Login = () => {
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 border-transparent focus:border-transparent focus:ring-0 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-2.5 px-4"
                     placeholder="Email Address"
                     required
                     value={email}
@@ -107,20 +115,30 @@ const Login = () => {
                     }
                   />
                 </div>
-                <div>
-                  <input
-                    type="password"
+                <div className="flex bg-gray-50 items-center border border-gray-300 rounded-lg focus-within:ring-primary-600 focus-within:border-primary-600">
+                <input
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
                     placeholder="Password"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg border-none border-transparent focus:border-transparent focus:ring-0 flex-grow px-4 py-2.5"
                     required
+                    autoComplete="off"
                     value={password}
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
                   />
+                  
+                  <button
+                    type="button"
+                    className="text-gray-600 hover:text-gray-900 px-4 py-2 focus:outline-none"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <IoIosEyeOff size={20} /> : <IoIosEye size={20} />}
+                  </button>
                 </div>
+                {errorMsg != "" && <p className="text-[red] text-[10px] !mt-[4px]">{errorMsg}</p>}
                 <div className="flex items-center justify-end">
                   <Link
                     to="/auth/password/forgot"

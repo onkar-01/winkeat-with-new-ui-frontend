@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "../helper";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -11,13 +12,49 @@ const Profile = () => {
       navigate("/auth/login");
     }
   }, []);
+  const [image, setImage] = useState(userInfo.avatar.url);
+  // const [file, setFile] = useState(null);
 
+
+  const handleImageChange = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/me/image-upload`, {
+        method: "PUT",
+        body: formData,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      });
+      if(res.ok){
+        const data = await res.json();
+        setImage(data.user.avatar.url);
+        localStorage.setItem("userInfo", JSON.stringify(data.user));
+      }
+  
+      if (!res.ok) {
+        throw new Error("Failed to upload image");
+      }
+      // Handle success, maybe update UI or show a message
+    } catch (error) {
+      console.error("Error uploading image:", error.message);
+      // Handle error, maybe show an error message to the user
+    }
+  };
+
+  // useEffect(() => {
+  //   handleImageChange();
+  // },[file]);
+  
   return (
     <div className="mt-20 z-0">
       <div className="overflow-hidden rounded-sm md:border md:border-stroke bg-white md:shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="overflow-hidden opacity-0 relative z-0 h-35 md:h-65">
           <img
-            src={userInfo.avatar.url}
+            src={image||''}
             alt="profile cover"
             className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
           />
@@ -26,7 +63,7 @@ const Profile = () => {
               htmlFor="cover"
               className="flex cursor-pointer items-center justify-center gap-2 border-2 border-[#fff] rounded bg-[#ff742e] py-1 px-2 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
             >
-              <input type="file" name="cover" id="cover" className="sr-only" />
+              <input type="file" name="cover" id="cover" className="sr-only" onChange={(e)=>handleImageChange(e)} />
               <span>
                 <svg
                   className="fill-current"
@@ -55,10 +92,10 @@ const Profile = () => {
           </div>
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
-          <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-            <div className="mx-auto relative w-[150px] drop-shadow-2">
+          <div className="relative  mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
+            <div className="mx-auto relative w-[100px] sm:w-[150px] drop-shadow-2">
               <img
-                src={userInfo.avatar.url}
+                src={image}
                 alt="profile"
                 className="h-[100px] sm:w-[150px] sm:h-[150px] w-[100px]  rounded-lg"
               />
@@ -92,6 +129,7 @@ const Profile = () => {
                   name="profile"
                   id="profile"
                   className="sr-only"
+                  onChange={(e)=>handleImageChange(e)}
                 />
               </label>
             </div>
@@ -105,20 +143,9 @@ const Profile = () => {
               {userInfo.email}
             </div>
 
-            <div className="mx-auto max-w-180">
-              <h4 className="font-semibold text-black dark:text-white">
-                About Us
-              </h4>
-              <p className="mt-4.5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque posuere fermentum urna, eu condimentum mauris
-                tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus
-                ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
-                pharetra ligula sed, aliquam lacus.
-              </p>
-            </div>
+           
 
-            <div className="mt-6.5">
+            {/* <div className="mt-6.5">
               <h4 className="mb-3.5 font-medium text-black dark:text-white">
                 Follow me on
               </h4>
@@ -268,8 +295,8 @@ const Profile = () => {
                     </defs>
                   </svg>
                 </a>
-              </div>
-            </div>
+              </div>      
+            </div>                    */}
           </div>
         </div>
       </div>

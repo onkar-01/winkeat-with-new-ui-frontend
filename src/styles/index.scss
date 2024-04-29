@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import "./cart.scss";
+input {
+    outline: none !important;
+  }
+  

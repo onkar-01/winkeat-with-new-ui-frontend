@@ -34,8 +34,10 @@ const cartSlice = createSlice({
       );
 
       state.shipping = state.subTotal > 100 ? 0 : 0;
-
-      state.tax = Number((0.0 * state.subTotal).toFixed(2));
+      
+      const commission = state.subTotal * 0.02;
+      const gst = commission * 0.18;
+      state.tax = Number((commission + gst + 5 ).toFixed(2));
 
       state.total = Number(
         (state.subTotal + state.shipping + state.tax).toFixed(2)
@@ -53,8 +55,9 @@ const cartSlice = createSlice({
       state.shipping = state.subTotal > 100 ? 0 : 10;
 
       state.shipping = state.subTotal === 0 ? 0 : 10;
-
-      state.tax = Number((0.0 * state.subTotal).toFixed(2));
+      const commission = state.subTotal * 0.02;
+      const gst = commission * 0.18;
+      state.tax = Number((commission + gst + 5 ).toFixed(2));
 
       state.total = Number(
         (state.subTotal + state.shipping + state.tax).toFixed(2)
@@ -79,7 +82,9 @@ const cartSlice = createSlice({
       state.shipping = state.subTotal > 100 ? 0 : 10;
       state.shipping = state.subTotal === 0 ? 0 : 10;
 
-      state.tax = Number((0.0 * state.subTotal).toFixed(2));
+      const commission = state.subTotal * 0.02;
+      const gst = commission * 0.18;
+      state.tax = Number((commission + gst + 5 ).toFixed(2));
 
       state.total = Number(
         (state.subTotal + state.shipping + state.tax).toFixed(2)
@@ -107,8 +112,9 @@ const cartSlice = createSlice({
       } else {
         state.shipping = 10;
       }
-      state.tax = Number((0.0 * state.subTotal).toFixed(2));
-
+      const commission = state.subTotal * 0.02;
+      const gst = commission * 0.18;
+      state.tax = Number((commission + gst + 5 ).toFixed(2));
       state.total = Number(
         (state.subTotal + state.shipping + state.tax).toFixed(2)
       );

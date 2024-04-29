@@ -44,7 +44,7 @@ const OrderCard = ({ item }) => {
   const orderStatus = (status) => {
     if (status === "completed") {
       return (
-        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        <td className=" py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
             {item.productStatus}
           </p>
@@ -52,7 +52,7 @@ const OrderCard = ({ item }) => {
       );
     } else if (status === "delivered") {
       return (
-        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        <td className=" py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
             {item.productStatus}
           </p>
@@ -60,7 +60,7 @@ const OrderCard = ({ item }) => {
       );
     } else if (status === "rejected") {
       return (
-        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        <td className=" py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
             {item.productStatus}
           </p>
@@ -79,7 +79,7 @@ const OrderCard = ({ item }) => {
   const paymentStatus = (status) => {
     if (status === "paid") {
       return (
-        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        <td className=" py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
             {item.paymentStatus}
           </p>
@@ -87,7 +87,7 @@ const OrderCard = ({ item }) => {
       );
     } else if (status === "failed") {
       return (
-        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        <td className=" py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
             {item.paymentStatus}
           </p>
@@ -108,8 +108,11 @@ const OrderCard = ({ item }) => {
   }
 
   return (
-    <tr>
-      <td className="border-b space-x-2 flex border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+    <tr className="border-b border-[#eee]">
+       <td className=" py-5 px-4 dark:border-strokedark">
+        <p className="text-black dark:text-white">{item.order_id ?? ''}</p>
+      </td>
+      <td className=" space-x-2 flex  py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
         <div className="h-12.5 w-15 rounded-md">
           <img src={item.itemImage} alt="Product" />
         </div>
@@ -120,33 +123,33 @@ const OrderCard = ({ item }) => {
           <p className="text-sm">₹{item.itemPrice}</p>
         </div>
       </td>
-      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+      <td className=" py-5 px-4 dark:border-strokedark">
         <div className="product-name">
           <h5 className="font-medium text-black dark:text-white">
             {item.customerName}
           </h5>
-          <p className="text-black dark:text-white">{item.orderedAt}</p>
+          <p className="text-black dark:text-white">{new Date(item.orderedAt).toLocaleString()}</p>
         </div>
       </td>
-      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+      <td className=" py-5 px-4 dark:border-strokedark">
         <p className="text-black dark:text-white">{item.itemQuantity}</p>
       </td>
       {orderStatus(item.productStatus)}
       {/* {item.productStatus === "completed" ? (
-        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        <td className=" py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
             {item.productStatus}
           </p>
         </td>
       ) : (
-        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+        <td className=" py-5 px-4 dark:border-strokedark">
           <p className="inline-flex rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
             {item.productStatus}
           </p>
         </td>
       )} */}
       {paymentStatus(item.paymentStatus)}
-      <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+      <td className=" py-5 px-4 dark:border-strokedark">
         {item.productStatus === "rejected" ||
         item.productStatus === "delivered" ? (
           <div className="flex items-center space-x-3.5">
@@ -173,7 +176,7 @@ const OrderCard = ({ item }) => {
         ) : (
           <select
             id="countries"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#ff9d4e] focus:border-[#ffc259] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-gray-50 border min-w-[130px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#ff9d4e] focus:border-[#ffc259] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             onChange={updateStatus}
           >
             <option selected value="pending">

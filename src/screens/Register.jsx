@@ -10,6 +10,7 @@ const Register = () => {
   const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [errorMsg, setErrorMsg] = useState("");
   const { userInfo } = useSelector((state) => state.auth);
   useEffect(() => {
     if (userInfo) {
@@ -24,26 +25,24 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
+    cpassword: "",
     password: "",
   });
   const [image, setImage] = useState(null);
 
-  const { name, email, phone, password } = formData;
+  const { name, email, cpassword, password } = formData;
 
   console.log(import.meta.env.VITE_BASE_URL);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    password !== cpassword &&  toast.error("Password does not match"); setErrorMsg("Password does not match");
     const formData = new FormData();
     try {
       formData.append("name", name);
       formData.append("email", email);
-      formData.append("phone", phone);
       formData.append("password", password);
       formData.append("image", image);
-
       console.log(...formData);
       const response = await fetch(`${BASE_URL}/api/v1/register`, {
         method: "POST",
@@ -60,8 +59,8 @@ const Register = () => {
             name: "",
             email: "",
             password: "",
-            phone: "",
           });
+          setErrorMsg("");
           setImage(null);
           console.log(data);
           navigate("/auth/login");
@@ -69,10 +68,11 @@ const Register = () => {
         } else {
           toast.error(data.message);
           setLoading(false);
+          setErrorMsg(data.message);
         }
       } else {
-        toast.error("The user is already registered");
-        console.log(response);
+       
+        console.log(data.message);
         setLoading(false);
       }
     } catch (e) {
@@ -175,20 +175,7 @@ const Register = () => {
                     }
                   />
                 </div>
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                    placeholder="Phone Number"
-                    required
-                    value={phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                  />
-                </div>
+                
                 <div>
                   <input
                     type="password"
@@ -203,7 +190,21 @@ const Register = () => {
                     }
                   />
                 </div>
-
+                <div>
+                  <input
+                    type="password"
+                    name="cpassword"
+                    id="cpassword"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="Confirm Password"
+                    required
+                    value={cpassword}
+                    onChange={(e) =>
+                      setFormData({ ...formData, cpassword: e.target.value })
+                    }
+                  />
+                </div>
+                {errorMsg != "" && <p className="text-[red] text-[10px] !mt-[4px]">{errorMsg}</p>}
                 <button
                   // onClick={checktoast}
                   onClick={submitHandler}
