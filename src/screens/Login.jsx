@@ -138,7 +138,7 @@ const Login = () => {
                     {showPassword ? <IoIosEyeOff size={20} /> : <IoIosEye size={20} />}
                   </button>
                 </div>
-                {errorMsg != "" && <p className="text-[red] text-[10px] !mt-[4px]">{errorMsg}</p>}
+                {errorMsg != "" && <p className="text-[red] text-[12px] !mt-[4px]">{errorMsg}</p>}
                 <div className="flex items-center justify-end">
                   <Link
                     to="/auth/password/forgot"
