@@ -23,6 +23,8 @@ import AddInventory from "./screens/vendor/AddInventory";
 import ForgotPassword from "./screens/ForgotPassword";
 import ResetPassword from "./screens/ResetPassword";
 import InvoicePage from "./screens/Invoice";
+import PrivacyPolicy from "./screens/PrivacyPolicy";
+import ContactForm from "./components/contact";
 
 const App = () => {
   return (
@@ -50,6 +52,8 @@ const App = () => {
           <Route path="/invoice" element={<InvoicePage />} />
           <Route path="*" element={<NoPage />} />
         </Route>
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact-us" element={<ContactForm />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

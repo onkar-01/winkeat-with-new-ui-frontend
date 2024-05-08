@@ -80,6 +80,7 @@ const InventoryForm = () => {
             });
             setImage(null);
             setLoading(false);
+            navigate("/inventory");
           } else {
             toast.error(data.message);
             setLoading(false);

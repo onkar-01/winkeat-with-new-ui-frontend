@@ -36,7 +36,11 @@ const Register = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    password !== cpassword &&  toast.error("Password does not match"); setErrorMsg("Password does not match");
+    if (password !== cpassword) {
+      // If passwords don't match
+      toast.error("Password does not match"); // Display an error toast
+      setErrorMsg("Password does not match"); // Set an error message
+  }else{
     const formData = new FormData();
     try {
       formData.append("name", name);
@@ -79,6 +83,7 @@ const Register = () => {
       console.log(e);
       setLoading(false);
     }
+  }
   };
   return (
     <>
@@ -204,7 +209,7 @@ const Register = () => {
                     }
                   />
                 </div>
-                {errorMsg != "" && <p className="text-[red] text-[10px] !mt-[4px]">{errorMsg}</p>}
+                {errorMsg != "" && <p className="text-[red] text-[14px] !mt-[4px]">{errorMsg}</p>}
                 <button
                   // onClick={checktoast}
                   onClick={submitHandler}

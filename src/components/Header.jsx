@@ -266,7 +266,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
             <input
               type="text"
               className="bg-purple-white shadow-lg rounded border-0 p-2"
-              placeholder="Search by name..."
+              placeholder="Search "
               onChange={(e) => {
                 searchHandler(e);
               }}

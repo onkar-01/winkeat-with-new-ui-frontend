@@ -34,9 +34,9 @@ const [data, setData] = useState([]);
         {data.earningsIncreasePercentage < 0 ? <MdArrowDropDown className='mr-4' size={20} /> : <MdArrowDropUp className='mr-4' size={20} />}{data.earningsIncreasePercentage}%
       </p>
       <div className='flex flex-col justify-between items-center'>
-        <h1 className='p-4 flex items-center text-[50px] sm:text-[60px] md:text-[50px] lg:text-[50px] font-bold'>
-          ₹ {data.totalEarnings ?? 0}
-        </h1>
+      <h1 className='p-4 flex items-center  text-3xl font-bold'>
+        ₹ {data.totalEarnings ?? 0}
+      </h1>
         <p className='mr-2 text-[14px] min-w-max sm:text-[16px] md:text-[14px] text-center  lg:text-[14px]'>Total Sales {data.widthdrawaled ? <p className='text-success'>withdrawn</p> : <p className='text-red-600 ml-1'>Not withdrawn yet</p>
       }</p>
       </div>
@@ -46,7 +46,7 @@ const [data, setData] = useState([]);
       {data.salesIncreasePercentage < 0 ? <MdArrowDropDown className='mr-4' size={20} /> : <MdArrowDropUp className='mr-4' size={20} />} {data.salesIncreasePercentage}%
       </p>
       <div className='flex flex-col justify-between items-center'>
-        <h1 className='p-4 flex items-center text-[50px] sm:text-[60px] md:text-[50px] lg:text-[50px] font-bold'>
+        <h1 className='p-4 flex items-center  text-3xl font-bold'>
           {data.totalSales ?? 0}
         </h1>
         <p className='mr-2 text-[14px] sm:text-[16px] md:text-[14px] lg:text-[14px]'>Total Orders</p>
@@ -55,7 +55,7 @@ const [data, setData] = useState([]);
     <div className='w-full sm:w-[45%] md:w-[30%] lg:w-[30%] h-[130px] sm:h-[150px] md:h-[130px] lg:h-[130px] p-4 border-2 flex justify-between items-center text-[50px] sm:text-[60px] md:text-[50px] lg:text-[50px] font-bold border-[#ff742e] rounded-md shadow-md'>
       <p className='mr-2 text-[14px] sm:text-[16px] md:text-[14px] lg:text-[14px]'>Ballence :</p>
       <div className='flex flex-col justify-between items-center'>
-        <h1 className='p-4 flex items-center text-[50px] sm:text-[60px] md:text-[50px] lg:text-[50px] font-bold'>
+        <h1 className='p-4 flex items-center  text-3xl font-bold'>
           ₹ {data.balance ?? 0}
         </h1>
       </div>
