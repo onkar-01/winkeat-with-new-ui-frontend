@@ -10,7 +10,7 @@ import Loader from "../components/Loader";
 const Login = () => {
   const [loading, setLoading] = useState();
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMsg,setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
@@ -116,7 +116,7 @@ const Login = () => {
                   />
                 </div>
                 <div className="flex bg-gray-50 items-center border border-gray-300 rounded-lg focus-within:ring-primary-600 focus-within:border-primary-600">
-                <input
+                  <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
@@ -129,16 +129,22 @@ const Login = () => {
                       setFormData({ ...formData, password: e.target.value })
                     }
                   />
-                  
+
                   <button
                     type="button"
                     className="text-gray-600 hover:text-gray-900 px-4 py-2 focus:outline-none"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <IoIosEyeOff size={20} /> : <IoIosEye size={20} />}
+                    {showPassword ? (
+                      <IoIosEyeOff size={20} />
+                    ) : (
+                      <IoIosEye size={20} />
+                    )}
                   </button>
                 </div>
-                {errorMsg != "" && <p className="text-[red] text-[12px] !mt-[4px]">{errorMsg}</p>}
+                {errorMsg != "" && (
+                  <p className="text-[red] text-[12px] !mt-[4px]">{errorMsg}</p>
+                )}
                 <div className="flex items-center justify-end">
                   <Link
                     to="/auth/password/forgot"
@@ -169,14 +175,23 @@ const Login = () => {
         </div>
       </section>
       <div className="text-[#efeded] flex justify-end gap-[10px] font-josefin-sans mr-0 w-full mt-[-50px] text-right absolute bottom-0 right-0 px-4 py-2">
-    <h1 className="flex text-[12px] flex-row">© 2024, Winkeat <Link to="/privacy-policy" className="hover:underline mx-[10px] flex items-center">
-      Privacy Policy
-    </Link>{" "}
-    and{" "}
-    <Link to="/contact-us" className="hover:underline flex items-center ml-[10px]">
-      Contact Us
-    </Link></h1>
-  </div>
+        <h1 className="flex text-[12px] flex-row">
+          © 2024, Winkeat{" "}
+          <Link
+            to="/privacy-policy"
+            className="hover:underline mx-[10px] flex items-center"
+          >
+            Privacy Policy
+          </Link>{" "}
+          and{" "}
+          <Link
+            to="/contact-us"
+            className="hover:underline flex items-center ml-[10px]"
+          >
+            Contact Us
+          </Link>
+        </h1>
+      </div>
       <Toaster />
     </>
   );
