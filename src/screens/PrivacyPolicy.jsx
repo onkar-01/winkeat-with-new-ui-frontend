@@ -204,9 +204,6 @@ const PrivacyPolicy = () => {
             <li className="mb-2">
                 <p>By visiting this page on our website: <a href="https://www.winkeat.com/contact-us" rel="external nofollow noopener" target="_blank" className="text-blue-500 underline">https://www.winkeat.com/contact-us</a></p>
             </li>
-            <li className="mb-2">
-                <p>By phone number: 9006005081</p>
-            </li>
         </ul>
     </div>
     </>
