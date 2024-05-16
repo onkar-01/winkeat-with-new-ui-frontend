@@ -25,6 +25,8 @@ import ResetPassword from "./screens/ResetPassword";
 import InvoicePage from "./screens/Invoice";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import ContactForm from "./components/contact";
+import TermsAndCondition from "./screens/TermsAndCondition";
+import ReturnRefundPolicy from "./screens/refundPolicy";
 
 const App = () => {
   return (
@@ -54,6 +56,8 @@ const App = () => {
         </Route>
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact-us" element={<ContactForm />} />
+          <Route path="/terms-and-condition" element={<TermsAndCondition />} />
+          <Route path="/return-and-refund-policy" element={<ReturnRefundPolicy />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

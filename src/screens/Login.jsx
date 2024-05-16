@@ -83,7 +83,7 @@ const Login = () => {
 
   return (
     <>
-      <section className=" sm:bg-[#ff742e]">
+      <section className=" sm:bg-[#ff742e] h-[100vh]">
         <div className="flex flex-col items-center justify-center sm:px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white sm:rounded-lg sm:shadow md:mt-0 sm:max-w-md xl:p-0 text-center">
             <div className="p-6 space-y-16 mt-[100px] sm:mt-[0px]   sm:space-y-4 md:space-y-6 sm:p-8">
@@ -174,24 +174,39 @@ const Login = () => {
           </div>
         </div>
       </section>
-      <div className="text-[#efeded] flex justify-end gap-[10px] font-josefin-sans mr-0 w-full mt-[-50px] text-right absolute bottom-0 right-0 px-4 py-2">
-        <h1 className="flex text-[12px] flex-row">
-          © 2024, Winkeat{" "}
-          <Link
-            to="/privacy-policy"
-            className="hover:underline mx-[10px] flex items-center"
-          >
-            Privacy Policy
-          </Link>{" "}
-          and{" "}
-          <Link
-            to="/contact-us"
-            className="hover:underline flex items-center ml-[10px]"
-          >
-            Contact Us
-          </Link>
-        </h1>
-      </div>
+      <div className="sm:text-[#efeded] text-[#ff742e] flex flex-wrap justify-center sm:justify-end gap-[10px] font-josefin-sans mt-[-50px] text-center sm:text-right absolute bottom-0 right-0 px-4 py-2 w-full sm:w-auto">
+  <h1 className="flex text-[12px] flex-row flex-wrap justify-center sm:justify-end">
+    © 2024, Winkeat{" "}
+    <Link
+      to="/return-and-refund-policy"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Return and Refund Policy
+    </Link>
+    <span className="hidden sm:inline">|</span> {/* Show pipe separator on small screens */}
+    <Link
+      to="/privacy-policy"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Privacy Policy
+    </Link>
+    <span className="hidden sm:inline">|</span> {/* Show pipe separator on small screens */}
+    <Link
+      to="/terms-and-condition"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Terms and Conditions
+    </Link>{" "}
+    and{" "}
+    <Link
+      to="/contact-us"
+      className="hover:underline flex items-center ml-[10px]"
+    >
+      Contact Us
+    </Link>
+  </h1>
+</div>
+
       <Toaster />
     </>
   );

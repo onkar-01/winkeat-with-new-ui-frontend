@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from './Loader';
 import { BASE_URL } from '../helper';
 import toast, { Toaster } from "react-hot-toast";
@@ -69,7 +69,7 @@ const ContactForm = () => {
     <header className="bg-[#ff742e] text-white p-4 h-[200px]">
     <img onClick={()=>navigate("/")} src='logo2.png' alt='logo' className='w-[60px] cursor-pointer h-[60px] mx-auto' />
     
-  </header>
+    </header>
     <form onSubmit={handleSubmit} className="min-w-[70%] bg-[#ffffff]  shadow-[#fff] md:shadow-[#bcbaba] shadow-[0px_10px_10px] p-[20px]  sm:p-[50px] mt-[-50px] rounded-[10px]    max-w-lg mx-auto">
         <h1 className="text-[35px] font-bold my-[50px] text-[#ff742e]">Contact Us</h1>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -157,9 +157,47 @@ const ContactForm = () => {
                 Cancel
             </button>
             </div>
-        {/* <div className="md:w-fit"></div> */}
       </div>
     </form>
+
+    <div className="flex flex-col items-center justify-center mt-[100px] text-center">
+      <h1 className="text-[#ff742e] font-['josefin sans'] mb-4">For any queries or feedback, please feel free to contact us. We will get back to you as soon as possible.</h1>
+      <h1 className="text-[#ff742e] mb-4">Email: <a href="mailto:winkeat.info@gmail.com" className="text-[#ff742e]">winkeat.info@gmail.com</a></h1>
+      <h1 className="text-[#ff742e] mb-4">phone: <a href="mailto:winkeat.info@gmail.com" className="text-[#ff742e]">+91 9006005081</a></h1>
+      <h1 className="text-[#ff742e] mb-4">Address: KEIC Shell, K.R. Mangalam University Sohna Road, Gurugram, Sohna Rural, Sohna, Haryana 122103  </h1>
+    </div>
+    <div className=" bg-[#efeded] !w-full text-[#ff742e] flex flex-wrap justify-center  gap-[10px] font-josefin-sans text-center sm:text-right  bottom-0 right-0 px-4 py-2  sm:w-auto">
+  <h1 className="flex text-[12px] flex-row flex-wrap justify-center sm:justify-end">
+    © 2024, Winkeat{" "}
+    <Link
+      to="/return-and-refund-policy"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Return and Refund Policy
+    </Link>
+    <span className="hidden sm:inline">|</span> 
+    <Link
+      to="/privacy-policy"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Privacy Policy
+    </Link>
+    <span className="hidden sm:inline">|</span> {/* Show pipe separator on small screens */}
+    <Link
+      to="/terms-and-condition"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Terms and Conditions
+    </Link>{" "}
+    and{" "}
+    <Link
+      to="/contact-us"
+      className="hover:underline flex items-center ml-[10px]"
+    >
+      Contact Us
+    </Link>
+  </h1>
+</div>
     <Toaster />
     </div>
   );

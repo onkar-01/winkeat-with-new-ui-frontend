@@ -89,6 +89,38 @@ const SidebarWithHeader = () => {
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         <Outlet />
+        <div className=" bg-[#efeded] !w-full text-[#ff742e] flex flex-wrap justify-center  gap-[10px] font-josefin-sans mt-[-50px] text-center sm:text-right absolute bottom-0 right-0 px-4 py-2  sm:w-auto">
+  <h1 className="flex text-[12px] flex-row flex-wrap justify-center sm:justify-end">
+    © 2024, Winkeat{" "}
+    <Link
+      to="/return-and-refund-policy"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Return and Refund Policy
+    </Link>
+    <span className="hidden sm:inline">|</span> 
+    <Link
+      to="/privacy-policy"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Privacy Policy
+    </Link>
+    <span className="hidden sm:inline">|</span> {/* Show pipe separator on small screens */}
+    <Link
+      to="/terms-and-condition"
+      className="hover:underline mx-[10px] flex items-center"
+    >
+      Terms and Conditions
+    </Link>{" "}
+    and{" "}
+    <Link
+      to="/contact-us"
+      className="hover:underline flex items-center ml-[10px]"
+    >
+      Contact Us
+    </Link>
+  </h1>
+</div>
       </Box>
     </Box>
   );
