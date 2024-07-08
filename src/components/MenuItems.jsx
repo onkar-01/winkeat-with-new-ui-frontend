@@ -24,11 +24,11 @@ const MenuCard = ({ product, handler }) => {
           <span className="text-gray-400 mr-3 uppercase text-xs">
             {user.name}
           </span>
-          <div className="flex justify-between h-[30px]  w-full">
-          <p className="text-sm sm:text-lg font-bold text-black truncate block capitalize">
+          <div className="flex justify-between min-h-[40px]  w-full">
+          <p className="text-sm sm:text-lg font-bold text-black min-h-[40px] block capitalize">
             {name}
           </p>
-          <p className="text-sm sm:text-lg font-semibold text-black cursor-auto ">
+          <p className="text-sm sm:text-lg w-[40%] font-semibold text-black cursor-auto ">
               ₹ {price}
             </p>
             </div>

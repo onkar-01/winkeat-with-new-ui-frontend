@@ -60,6 +60,10 @@ const Login = () => {
           toast.error("Authentication failed. Please check your credentials.");
           setLoading(false);
           setErrorMsg("Authentication failed. Please check your credentials.");
+        }if(response.status == 400){
+          toast.error("Please verify your email");
+          setLoading(false);
+          setErrorMsg("Please verify your email");
         } else {
           toast.error(
             "An error occurred while logging in. Please try again later."

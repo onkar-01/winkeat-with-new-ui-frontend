@@ -53,6 +53,10 @@ const AllOrder = ({setDashboardDate}) => {
   useEffect(() => {
 
     fetchProducts();
+    const interval = setInterval(fetchProducts, 10000);
+  
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(interval);
   }, [keyword,date]);
 
   console.log(date);

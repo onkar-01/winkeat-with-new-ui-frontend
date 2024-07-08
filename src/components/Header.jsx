@@ -361,9 +361,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 </HStack>
                 {/* <MenuItem>Billing</MenuItem> */}
                 <MenuDivider />
-                <MenuItem onClick={signoutHandler}>Active Order</MenuItem>
-                <MenuItem onClick={signoutHandler}>Previous Order</MenuItem>
-                <MenuItem onClick={signoutHandler}>Profile</MenuItem>
+                <MenuItem onClick={()=>navigate("/user/active-orders")}>Active Order</MenuItem>
+                <MenuItem  onClick={()=>navigate("/user/previous-orders")}>Previous Order</MenuItem>
+                <MenuItem  onClick={()=>navigate("/profile")}>Profile</MenuItem>
                 <MenuItem onClick={signoutHandler}>Sign out</MenuItem>
               </MenuList>
             </Menu>

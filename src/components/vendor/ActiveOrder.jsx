@@ -40,6 +40,10 @@ const ActiveOrder = () => {
 
   useEffect(() => {
     fetchProducts();
+    const interval = setInterval(fetchProducts, 10000);
+  
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(interval);
   }, [keyword, date]);
 
   if (loading === true) {
