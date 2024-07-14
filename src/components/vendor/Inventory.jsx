@@ -186,11 +186,19 @@ const InventoryItems = () => {
     return <Loader loading={loading} />;
   }
   return (
+    <>
+    {productData?.length === 0 && (
+      <div className="text-center w-full">
+      <h1 className="text-center text-lg">No products found. Please add to the inventory.</h1>
+    </div>
+     )}
     <div className=" grid lg:grid-cols-2  ">
+      
       {productData?.map((product) => (
         <InventoryCard product={product} key={product._id} />
       ))}
     </div>
+    </>
   );
 };
 

@@ -56,27 +56,18 @@ const Login = () => {
           setErrorMsg("");
         }
       } else {
-        if (response.status === 401) {
-          toast.error("Authentication failed. Please check your credentials.");
-          setLoading(false);
-          setErrorMsg("Authentication failed. Please check your credentials.");
-        }if(response.status == 400){
-          toast.error("Please verify your email");
-          setLoading(false);
-          setErrorMsg("Please verify your email");
-        } else {
-          toast.error(
-            "An error occurred while logging in. Please try again later."
-          );
-          setLoading(false);
-        }
+        const errorResponse = await response.json();
+        const errorMessage = errorResponse.message || "An unknown error occurred";
+        toast.error(errorMessage);
+        setErrorMsg(errorMessage);
+        setLoading(false);
       }
     } catch (err) {
       // Handle any network or other errors that may occur during the fetch
       toast.error(
         "An error occurred while logging in. Please try again later."
       );
-      setErrorMsg(response.message);
+      setErrorMsg(err?.response?.data?.message);
       console.error(err);
       setLoading(false);
     }

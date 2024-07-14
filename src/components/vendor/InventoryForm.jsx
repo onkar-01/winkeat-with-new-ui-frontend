@@ -39,15 +39,16 @@ const InventoryForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (
-      !name ||
-      !category ||
-      !price ||
-      !stock ||
-      !description ||
-      image === null
-    ) {
-      toast.error("Please fill the all required fields");
+    if (![
+      name, 
+      category, 
+      price, 
+      stock, 
+      description, 
+      image && image.size > 0
+    ].every(Boolean)) {
+      toast.error("Please fill all required fields, including product image");
+      setLoading(false);
     } else {
       try {
         // console.log(itemDetails.size)

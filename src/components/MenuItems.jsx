@@ -102,6 +102,11 @@ const MenuItems = ({ id }) => {
 
   return (
     <section className=" flex flex-auto flex-wrap justify-items-center justify-center sm:justify-start lg:mx-[30px] gap-x-5 gap-y-10 md:gap-y-10 md:gap-x-10 lg:gap-y-10 lg:gap-x-10 mt-[20px] mb-5 mr-auto ml-auto sm:mr-5">
+      {productData?.length === 0 && (
+        <div className="text-center w-full">
+        <h1 className="text-center text-lg">No products found.</h1>
+      </div>
+      )}
       {productData?.map((product) => (
         <MenuCard
           product={product}

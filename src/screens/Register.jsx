@@ -40,50 +40,52 @@ const Register = () => {
       // If passwords don't match
       toast.error("Password does not match"); // Display an error toast
       setErrorMsg("Password does not match"); // Set an error message
-  }else{
-    const formData = new FormData();
-    try {
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("image", image);
-      console.log(...formData);
-      const response = await fetch(`${BASE_URL}/api/v1/register`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          toast.success(
-            "User registered Successfully Please check your email for verification"
-          );
-          setFormData({
-            name: "",
-            email: "",
-            password: "",
-          });
-          setErrorMsg("");
-          setImage(null);
-          console.log(data);
-          navigate("/auth/login");
-          setLoading(false);
+    } else {
+      const formData = new FormData();
+      try {
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("image", image);
+        console.log(...formData);
+        const response = await fetch(`${BASE_URL}/api/v1/register`, {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            toast.success(
+              "User registered Successfully Please check your email for verification"
+            );
+            setFormData({
+              name: "",
+              email: "",
+              password: "",
+              cpassword: "",
+            });
+            setErrorMsg("");
+            setImage(null);
+            console.log(data);
+            // navigate("/auth/login");
+            setLoading(false);
+          }
         } else {
-          toast.error(data.message);
+          const errorResponse = await response.json();
+          const errorMessage =
+            errorResponse.message || "An unknown error occurred";
+          toast.error(errorMessage);
+          setErrorMsg(errorMessage);
           setLoading(false);
-          setErrorMsg(data.message);
+          console.log(data.message);
+          setLoading(false);
         }
-      } else {
-       
-        console.log(data.message);
+      } catch (e) {
+        console.log(e);
         setLoading(false);
       }
-    } catch (e) {
-      console.log(e);
-      setLoading(false);
     }
-  }
   };
   return (
     <>
@@ -180,7 +182,7 @@ const Register = () => {
                     }
                   />
                 </div>
-                
+
                 <div>
                   <input
                     type="password"
@@ -209,7 +211,9 @@ const Register = () => {
                     }
                   />
                 </div>
-                {errorMsg != "" && <p className="text-[red] text-[14px] !mt-[4px]">{errorMsg}</p>}
+                {errorMsg != "" && (
+                  <p className="text-[red] text-[14px] !mt-[4px]">{errorMsg}</p>
+                )}
                 <button
                   // onClick={checktoast}
                   onClick={submitHandler}
@@ -232,37 +236,39 @@ const Register = () => {
         </div>
       </section>
       <div className="sm:text-[#efeded] text-[#ff742e] flex flex-wrap justify-center sm:justify-end gap-[10px] font-josefin-sans mt-[-50px] text-center sm:text-right absolute bottom-0 right-0 px-4 py-2 w-full sm:w-auto">
-  <h1 className="flex text-[12px] flex-row flex-wrap justify-center sm:justify-end">
-    © 2024, Winkeat{" "}
-    <Link
-      to="/return-and-refund-policy"
-      className="hover:underline mx-[10px] flex items-center"
-    >
-      Return and Refund Policy
-    </Link>
-    <span className="hidden sm:inline">|</span> {/* Show pipe separator on small screens */}
-    <Link
-      to="/privacy-policy"
-      className="hover:underline mx-[10px] flex items-center"
-    >
-      Privacy Policy
-    </Link>
-    <span className="hidden sm:inline">|</span> {/* Show pipe separator on small screens */}
-    <Link
-      to="/terms-and-condition"
-      className="hover:underline mx-[10px] flex items-center"
-    >
-      Terms and Conditions
-    </Link>{" "}
-    and{" "}
-    <Link
-      to="/contact-us"
-      className="hover:underline flex items-center ml-[10px]"
-    >
-      Contact Us
-    </Link>
-  </h1>
-</div>
+        <h1 className="flex text-[12px] flex-row flex-wrap justify-center sm:justify-end">
+          © 2024, Winkeat{" "}
+          <Link
+            to="/return-and-refund-policy"
+            className="hover:underline mx-[10px] flex items-center"
+          >
+            Return and Refund Policy
+          </Link>
+          <span className="hidden sm:inline">|</span>{" "}
+          {/* Show pipe separator on small screens */}
+          <Link
+            to="/privacy-policy"
+            className="hover:underline mx-[10px] flex items-center"
+          >
+            Privacy Policy
+          </Link>
+          <span className="hidden sm:inline">|</span>{" "}
+          {/* Show pipe separator on small screens */}
+          <Link
+            to="/terms-and-condition"
+            className="hover:underline mx-[10px] flex items-center"
+          >
+            Terms and Conditions
+          </Link>{" "}
+          and{" "}
+          <Link
+            to="/contact-us"
+            className="hover:underline flex items-center ml-[10px]"
+          >
+            Contact Us
+          </Link>
+        </h1>
+      </div>
       <Toaster />
     </>
   );
