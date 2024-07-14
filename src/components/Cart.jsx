@@ -131,7 +131,7 @@ const CartItems = () => {
       callback_url: callbackUrl,
       prefill: {
         name: userInfo.name,
-        contact: userInfo.email,
+        email: userInfo.email,
       },
       notes: {
         address: "Razorpay Corporate Office",

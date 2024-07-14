@@ -52,7 +52,7 @@ const ActiveOrder = () => {
 
   console.log(data);
   return (
-    <div className="mt-20">
+    <div className="mt-20 mb-10">
       <input 
   type="date" 
   value={date} 

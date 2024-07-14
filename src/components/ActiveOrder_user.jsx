@@ -50,7 +50,7 @@ const ActiveOrder_user = () => {
     return <Loader loading={loading} />;
   }
   return (
-    <div className="mt-20">
+    <div className="mt-20 mb-10">
       <div className="rounded-sm bg-white lg:px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">

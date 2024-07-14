@@ -20,7 +20,7 @@ const EditInventory = ({}) => {
   const params = useParams();
 
   return (
-    <div className="mt-20">
+    <div className="mt-20 mb-10">
       <InventoryEditForm id={params.id} />
     </div>
   );

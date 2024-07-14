@@ -52,6 +52,13 @@ const Vendors = () => {
   return (
     <div>
       {" "}
+      {data.length === 0 && (
+        <div className="text-center w-full">
+          <h1 className="text-2xl font-semibold text-gray-900">
+            Currently no vendors available
+          </h1>
+        </div>
+      )}
       {data.map((vendor) => (
         <VendorCard vendor={vendor} key={vendor._id} />
       ))}

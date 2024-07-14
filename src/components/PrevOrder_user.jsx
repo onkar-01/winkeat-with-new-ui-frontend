@@ -44,7 +44,7 @@ const PrevOrder_user = () => {
     return <Loader loading={loading} />;
   }
   return (
-    <div className="mt-20">
+    <div className="mt-20 mb-10">
       <input 
   type="date" 
   value={date} 

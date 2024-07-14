@@ -20,7 +20,7 @@ const Inventory = () => {
   }
   return (
     <>
-      <div className="mt-20">
+      <div className="mt-20 mb-10">
         <InventoryItems />
         <InventoryAddButton icon={"AiOutlinePlus"} />
       </div>

@@ -24,7 +24,7 @@ const Home = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="mt-20">
+    <div className="mt-20 mb-10">
       <Vendors />
       <Toaster />
     </div>

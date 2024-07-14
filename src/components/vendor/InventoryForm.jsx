@@ -234,7 +234,11 @@ const InventoryForm = () => {
           >
             Add Inventory
           </Button>
-          <Button className="w-1/3" colorScheme="orange" variant="outline">
+          <Button
+          onClick={()=> 
+            navigate("/inventory")
+          }
+           className="w-1/3" colorScheme="orange" variant="outline">
             Cencel
           </Button>
         </div>

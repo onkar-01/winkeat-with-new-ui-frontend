@@ -50,7 +50,7 @@ const Profile = () => {
   // },[file]);
   
   return (
-    <div className="mt-20 z-0">
+    <div className="mt-20 mb-10 z-0">
       <div className="overflow-hidden rounded-sm md:border md:border-stroke bg-white md:shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="overflow-hidden opacity-0 relative z-0 h-35 md:h-65">
           <img

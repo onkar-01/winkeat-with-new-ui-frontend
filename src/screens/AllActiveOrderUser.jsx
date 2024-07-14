@@ -14,7 +14,7 @@ const AllActiveOrderUser = () => {
   }, [userInfo]);
   if (userInfo.role === "user") {
     return (
-      <div className="mt-20">
+      <div className="mt-20 mb-10">
         <ActiveOrder_user />
       </div>
     );

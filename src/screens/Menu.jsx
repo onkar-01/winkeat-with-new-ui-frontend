@@ -17,7 +17,7 @@ const Menu = () => {
 
   if (userInfo.role === "user") {
     return (
-      <div className="mt-20">
+      <div className="mt-20 mb-10">
         {/* <div className="p-4 mt-3 sm:ml-64"> */}
         <MenuItems id={params.id} />
         {/* </div> */}

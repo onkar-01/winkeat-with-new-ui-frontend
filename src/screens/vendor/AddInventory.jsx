@@ -17,7 +17,7 @@ const AddInventory = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="mt-20">
+    <div className="mt-20 mb-10">
       <InventoryForm />
     </div>
   );

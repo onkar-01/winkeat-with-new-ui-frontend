@@ -163,7 +163,7 @@ const InventoryEditForm = ({ id }) => {
     <>
       <FormControl className="space-y-4" isInvalid={isError}>
         <div className="container-1 w-full flex flex-wrap justify-around">
-          <div class="flex items-center justify-center w-full">
+          {/* <div class="flex items-center justify-center w-full">
             <label
               for="dropzone-file"
               class="flex flex-col items-center justify-center w-full h-23 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -208,7 +208,7 @@ const InventoryEditForm = ({ id }) => {
                 onChange={(e) => setImage(e.target.files[0])}
               />
             </label>
-          </div>
+          </div> */}
           <div className="w-full lg:w-1/2 ">
             <FormLabel>Name</FormLabel>
             <Input
@@ -291,7 +291,9 @@ const InventoryEditForm = ({ id }) => {
           >
             Update Inventory
           </Button>
-          <Button className="w-1/3" colorScheme="orange" variant="outline">
+          <Button onClick={()=> 
+            navigate("/inventory")
+          } className="w-1/3" colorScheme="orange" variant="outline">
             Cencel
           </Button>
         </div>
